@@ -14,21 +14,23 @@ function NavbarComponent() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand as={Link} to="#home">
+        <Navbar.Brand as={Link} to="/all-job-posts">
           Job-Tracker
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {isAuthenticated && <Nav.Link as={Link} to="/welcome">
-              Home
+            {isAuthenticated && <Nav.Link as={Link} to="/user-profile">
+              User
+            </Nav.Link>}
+            {isAuthenticated && <Nav.Link as={Link} to="/add-job-posts">
+              Add Job Posts
             </Nav.Link>}
             {isAuthenticated && <Nav.Link as={Link} to="/all-job-posts">
               All Jobs
             </Nav.Link>}
           </Nav>
-        </Navbar.Collapse>
-        <Nav>
+          <Nav>
           {isAuthenticated && (
             <Nav.Link as={Link} to="/logout" onClick={handleLogout}>
               Logout
@@ -45,6 +47,7 @@ function NavbarComponent() {
             </Nav.Link>
           )}
         </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

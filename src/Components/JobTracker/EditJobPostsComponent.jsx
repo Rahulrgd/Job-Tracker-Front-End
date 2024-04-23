@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useParams } from "react-router-dom";
-import { updateJobPost } from "../api/JobPostApiServices";
 
 const EditJobPostsComponent = (item) => {
   const { id } = useParams();
@@ -16,7 +15,6 @@ const EditJobPostsComponent = (item) => {
       jobDescription: values.description
     };
     console.log(jobPost)
-    updateJobPost(values.title).then((response)=>{console.log(response)}).catch((error)=>{console.log(error)})
   };
 
   const validate = (values) => {

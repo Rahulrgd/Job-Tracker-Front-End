@@ -1,55 +1,42 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { deleteJobPost, jobPosts } from "../api/JobPostApiServices";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom";
+import { allJobPosts } from "../api/JobPostApiServices";
 
 export default function AllJobPostsComponent() {
-  const [list, setList] = useState([]);
+  const [allJobList, setAllJobList] = useState([]);
+
   useEffect(() => {
-    retriveJobPosts();
-  }, []);
-  function retriveJobPosts() {
-    jobPosts()
-      .then((response) => {
-        setList(response.data);
-        console.log(response.data);
-      })
+    allJobPosts()
+      .then((response) => setAllJobList(response.data))
       .catch((error) => console.log(error));
-  }
+  }, []);
 
-  const handleDeteJobPost = (id) => {
-    // deleteJobPost(id).then((response)=>{console.log(response.data)}).catch((error)=>console.log(error))
-    deleteJobPost(id)
-    console.log("clicked " + id)
-  }
+  const handleDeleteJobPost = () => {};
 
-  const navigate = useNavigate();
+  const handleEditJobPost = () => {};
 
-  const handleEditJobPost = (id) => {
-    navigate(`/editJobPost/${id}`)
-  }
   return (
     <div className="m-5">
       <h1>All Job Posts</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>ID</th>
+            <th></th>
             <th>Job Title</th>
             <th>Company</th>
             <th>Description</th>
             <th>Status</th>
             <th>Date</th>
             <th>Link</th>
-            <th>Delete JobPost</th>
-            <th>Edit</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {list.map((item) => (
+          {allJobList.map((item, index) => (
             <tr key={item.id}>
-              <td>{item.id}</td>
+              <td>{index + 1}</td>
               <td>{item.jobTitle}</td>
               <td>{item.companyName}</td>
               <td>{item.jobDescription}</td>
@@ -57,12 +44,18 @@ export default function AllJobPostsComponent() {
               <td>{item.jobDate}</td>
               <td>{item.jobLink}</td>
               <td>
-                <Button variant="danger" onClick={()=>handleDeteJobPost(item.id)}>
+                <Button
+                  variant="danger"
+                  onClick={() => handleDeleteJobPost(item.id)}
+                >
                   Delete
                 </Button>
               </td>
               <td>
-                <Button variant="success" onClick={()=>handleEditJobPost(item.id)}>
+                <Button
+                  variant="success"
+                  onClick={() => handleEditJobPost(item.id)}
+                >
                   Edit
                 </Button>
               </td>

@@ -9,6 +9,8 @@ import AuthProvider, { useAuth } from "./Components/Security/AuthContext";
 import EditJobPostsComponent from "./Components/JobTracker/EditJobPostsComponent";
 import SignupComponent from "./Components/Navbar/SignupComponent";
 import AllJobPostsComponent from "./Components/JobTracker/AllJobPosts";
+import AddJobPostsComponent from "./Components/JobTracker/AddJobPostsComponent";
+import UserComponent from "./Components/User/UserComponent";
 
 function AuthenticatedRoute({ children }) {
   const authContext = useAuth();
@@ -35,11 +37,19 @@ function App() {
                 </AuthenticatedRoute>
               }
             />
-            <Route
+            {/* <Route
               path="/welcome/:username"
               element={
                 <AuthenticatedRoute>
                   <WelcomeComponenet />
+                </AuthenticatedRoute>
+              }
+            /> */}
+            <Route
+              path="/user-profile"
+              element={
+                <AuthenticatedRoute>
+                  <UserComponent />
                 </AuthenticatedRoute>
               }
             />
@@ -48,6 +58,14 @@ function App() {
               element={
                 <AuthenticatedRoute>
                   <EditJobPostsComponent />
+                </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/add-job-posts"
+              element={
+                <AuthenticatedRoute>
+                  <AddJobPostsComponent />
                 </AuthenticatedRoute>
               }
             />
