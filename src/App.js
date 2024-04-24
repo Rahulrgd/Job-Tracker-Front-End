@@ -11,6 +11,8 @@ import SignupComponent from "./Components/Navbar/SignupComponent";
 import AllJobPostsComponent from "./Components/JobTracker/AllJobPosts";
 import AddJobPostsComponent from "./Components/JobTracker/AddJobPostsComponent";
 import UserComponent from "./Components/User/UserComponent";
+import UserJobPostsComponent from "./Components/User/UserJobPostsComponents";
+import UsersResumeComponent from "./Components/User/UsersResumes";
 
 function AuthenticatedRoute({ children }) {
   const authContext = useAuth();
@@ -50,6 +52,22 @@ function App() {
               element={
                 <AuthenticatedRoute>
                   <UserComponent />
+                </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/user-job-posts"
+              element={
+                <AuthenticatedRoute>
+                  <UserJobPostsComponent />
+                </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/user-resumes"
+              element={
+                <AuthenticatedRoute>
+                  <UsersResumeComponent />
                 </AuthenticatedRoute>
               }
             />

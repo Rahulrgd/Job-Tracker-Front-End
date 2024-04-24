@@ -1,5 +1,4 @@
 import { apiClient } from "./ApiClient"
 
-export const signUpServicesApi = async (body) => { await apiClient.post("/sign-up/", body)}
-
-export const jwtAuthenticationServiceApi = async (request) => await apiClient.post("/authenticate", request);
+export const retrieveUserDetails = () => apiClient.get("/v1/user-detail")
+export const retrieveUserJobPosts = () => apiClient.get("/v1/retrieve-user-job-posts")

@@ -8,9 +8,11 @@ function NavbarComponent() {
   const authContext = useAuth();
   const isAuthenticated = authContext.isAuthenticated;
   const nevigate = useNavigate();
-    const handleLogout = ()=>{
-        authContext.logout()
+
+    const handleLogout = async ()=>{
+        await authContext.logout()
     }
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -23,12 +25,6 @@ function NavbarComponent() {
             {isAuthenticated && <Nav.Link as={Link} to="/user-profile">
               User
             </Nav.Link>}
-            {isAuthenticated && <Nav.Link as={Link} to="/add-job-posts">
-              Add Job Posts
-            </Nav.Link>}
-            {isAuthenticated && <Nav.Link as={Link} to="/all-job-posts">
-              All Jobs
-            </Nav.Link>}
           </Nav>
           <Nav>
           {isAuthenticated && (
@@ -39,11 +35,6 @@ function NavbarComponent() {
           {!isAuthenticated && (
             <Nav.Link eventKey={2} as={Link} to="/login">
               Login
-            </Nav.Link>
-          )}
-          {!isAuthenticated && (
-            <Nav.Link eventKey={2} as={Link} to="/signup">
-              Signup
             </Nav.Link>
           )}
         </Nav>

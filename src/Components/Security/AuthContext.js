@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { apiClient } from "../api/ApiClient";
-import { jwtAuthenticationServiceApi } from "../api/UserServicesApi";
+import { jwtAuthenticationServiceApi } from "../api/AuthenticationApiServices";
 
 export const AuthContext = createContext();
 
@@ -21,7 +21,6 @@ export default function AuthProvider({ children }) {
         config.headers.Authorization = `Bearer ${response.data.jwtToken}`
         return config
       });
-
       return true;
     } catch (error) {
       console.log(error);
@@ -32,6 +31,7 @@ export default function AuthProvider({ children }) {
   function logout() {
     setAuthenticated(false);
     setToken(null);
+    setTimeout(()=>window.location.reload(),100)
   }
   return (
     <AuthContext.Provider

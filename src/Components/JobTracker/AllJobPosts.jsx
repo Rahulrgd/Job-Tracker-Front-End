@@ -29,8 +29,6 @@ export default function AllJobPostsComponent() {
             <th>Status</th>
             <th>Date</th>
             <th>Link</th>
-            <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -42,22 +40,9 @@ export default function AllJobPostsComponent() {
               <td>{item.jobDescription}</td>
               <td>{item.status}</td>
               <td>{item.jobDate}</td>
-              <td>{item.jobLink}</td>
               <td>
-                <Button
-                  variant="danger"
-                  onClick={() => handleDeleteJobPost(item.id)}
-                >
-                  Delete
-                </Button>
-              </td>
-              <td>
-                <Button
-                  variant="success"
-                  onClick={() => handleEditJobPost(item.id)}
-                >
-                  Edit
-                </Button>
+                {" "}
+                <Button href={item.jobLink}>Link</Button>
               </td>
             </tr>
           ))}

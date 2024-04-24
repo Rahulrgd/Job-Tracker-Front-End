@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Alert } from "react-bootstrap";
-import { signUpServicesApi } from "../api/UserServicesApi";
+import { signUpServicesApi } from "../api/AuthenticationApiServices";
 
 function SignupComponent() {
   const [formValues, setFormValues] = useState({

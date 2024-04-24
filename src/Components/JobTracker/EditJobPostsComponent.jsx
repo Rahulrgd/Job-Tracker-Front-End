@@ -1,66 +1,172 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  retrieveJobPostWithId,
+  updateUserJobPost,
+} from "../api/JobPostApiServices";
+import { Alert } from "react-bootstrap";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 
 const EditJobPostsComponent = (item) => {
   const { id } = useParams();
 
-  const [title, setTitle] = useState("SpringBoot");
-  const [description, setDescription] = useState("SpringBoot Developer");
+  const status = [
+    "Select an option",
+    "BOOKMARKED",
+    "APPLIED",
+    "ACTIVE",
+    "COMPLETED",
+    "CANCLED",
+    "REJECTED",
+    "SELECTED",
+  ];
 
-  const onSubmit = (values) => {
-    const jobPost = { 
-      jobTitle: values.title,
-      jobDescription: values.description
-    };
-    console.log(jobPost)
+  const [formValues, setFormValues] = useState({
+    jobTitle: "",
+    companyName: "",
+    jobDescription: "",
+    jobDate: "",
+    jobLink: "",
+    status: "",
+  });
+
+  useEffect(() => {
+    retrieveData(id);
+  }, []);
+
+  const [message, setMessage] = useState(false);
+
+  const clearValues = {
+    jobTitle: "",
+    companyName: "",
+    jobDescription: "",
+    jobDate: "",
+    jobLink: "",
+    status: "",
+  };
+
+  const navigate = useNavigate();
+
+  const retrieveData = async (id) => {
+    try {
+      const response = await retrieveJobPostWithId(id);
+      setFormValues(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onSubmit = async (values) => {
+    try {
+      await updateUserJobPost(values);
+      setMessage(true);
+      setFormValues(clearValues);
+
+      setTimeout(() => {
+        setMessage(false);
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const validate = (values) => {
     const errors = {};
-    if (values.title.length < 5) {
-      errors.title = "Enter a valid title!";
+    if (values.jobDescription.length < 2) {
+      errors.jobDescription = "Description can have less than 3 characters.";
     }
-    if (values.description.length < 5) {
-      errors.description = "Enter a valid description!";
+    if (values.jobTitle.length < 2) {
+      errors.jobTitle = "Job Title can have less than 3 characters.";
+    }
+    if (values.companyName.length < 2) {
+      errors.companyName = "Company name can have less than 3 characters.";
+    }
+    if (values.status === status[0]) {
+      errors.status = "Select status for job post.";
     }
     return errors;
   };
   return (
     <div className="container m-5">
-      <h2>Edit JobPost Page</h2>
-      <br />
       <Formik
-        initialValues={{ title, description }}
+        initialValues={formValues}
         enableReinitialize={true}
         onSubmit={onSubmit}
         validate={validate}
-        validateOnChange={false}
         validateOnBlur={false}
+        validateOnChange={false}
       >
-        {(prop) => (
+        {(props) => (
           <Form>
+            <h1>Edit Job Posts</h1>
+            <br />
+            {message && (
+              <Alert key="success" variant="success">
+                Job post edited successfully. You can add more.
+              </Alert>
+            )}
             <ErrorMessage
-              name="title"
-              component="div"
+              name="jobDescription"
               className="alert alert-warning"
+              component="div"
             />
             <ErrorMessage
-              name="description"
-              component="div"
+              name="status"
               className="alert alert-warning"
+              component="div"
+            />
+            <ErrorMessage
+              name="jobTitle"
+              className="alert alert-warning"
+              component="div"
+            />
+            <ErrorMessage
+              name="jobCompany"
+              className="alert alert-warning"
+              component="div"
             />
             <fieldset className="form-group">
-              <label className="label">Title</label>
-              <Field className="form-control" type="text" name="title" />
+              <label className="label m-1">Job Title</label>
+              <Field className="form-control" name="jobTitle" type="text" />
             </fieldset>
             <fieldset className="form-group">
-              <label className="label">Description</label>
-              <Field className="form-control" type="text" name="description" />
+              <label className="label m-1">Company Name</label>
+              <Field className="form-control" name="companyName" type="text" />
+            </fieldset>
+            <fieldset className="form-group">
+              <label className="label m-1">Description</label>
+              <Field
+                className="form-control"
+                name="jobDescription"
+                type="text"
+              />
+            </fieldset>
+            <fieldset className="form-group">
+              <label className="label m-1">Link</label>
+              <Field className="form-control" name="jobLink" type="href" />
+            </fieldset>
+            <fieldset className="form-group">
+              <label className="label m-1">Status</label>
+              <Field
+                className="form-control"
+                name="status"
+                as="select"
+                type="text"
+              >
+                {status.map((item, index) => (
+                  <option key={index + 1} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </Field>
+            </fieldset>
+            <fieldset className="form-group">
+              <label className="label m-1">Date</label>
+              <Field className="form-control" name="jobDate" type="date" />
             </fieldset>
             <button className="btn btn-success m-3" type="submit">
-              Submit
+              Edit Job Post
             </button>
           </Form>
         )}

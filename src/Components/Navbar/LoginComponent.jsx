@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { useAuth } from "../Security/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginComponent() {
   const [formValues, setFormValues] = useState({
@@ -27,7 +27,7 @@ function LoginComponent() {
     };
     setFormValues(values);
     if (authContext.login(body)) {
-      navigate("/all-job-posts")
+      navigate("/all-job-posts");
     }
   };
 
@@ -56,10 +56,20 @@ function LoginComponent() {
               <label className="label m-1">Password</label>
               <Field className="form-control" name="password" type="password" />
             </fieldset>
-            <button className="btn btn-success m-3">Login</button>
+            <div className="d-flex justify-content-end">
+              <button className="btn btn-success m-3">
+                Login
+              </button>
+            </div>
           </Form>
         )}
       </Formik>
+      <div className="d-flex justify-content-center m-5 text-secondary">
+        To create account
+        <Link className="mx-2" to="/signup">
+          click here.
+        </Link>
+      </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { addJobsApi } from "../api/JobPostApiServices";
 import { Alert } from "react-bootstrap";
+import { useAuth } from "../Security/AuthContext";
 
 const AddJobPostsComponent = () => {
   const status = [
@@ -35,31 +36,39 @@ const AddJobPostsComponent = () => {
     status: "",
   };
 
-  const onSubmit = (values) => {
+  const authContext = useAuth();
+
+  const onSubmit = async (values) => {
     setFormValues(values);
-    setTimeout(async () => {
-      console.log(formValues);
-      console.log(values.status);
-      await addJobsApi(formValues)
-        .then((response) => {
+    console.log(formValues);
+    addJobsApi(formValues)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 201) {
           setMessage(true);
           setFormValues(clearValues);
-          console.log(response);
-        })
-        .catch((error) => console.log(error));
-    }, 1);
+        }
+      })
+      .catch((error) => console.log(error));
+
+    setTimeout(() => {
+      setMessage(false);
+    }, 3000);
   };
 
   const validate = (values) => {
     const errors = {};
     if (values.jobDescription.length < 2) {
-      errors.jobDescription = "Description can have less than 3 characters";
+      errors.jobDescription = "Description can have less than 3 characters.";
     }
     if (values.jobTitle.length < 2) {
-      errors.jobTitle = "Job Title can have less than 3 characters";
+      errors.jobTitle = "Job Title can have less than 3 characters.";
     }
     if (values.companyName.length < 2) {
-      errors.companyName = "Company name can have less than 3 characters";
+      errors.companyName = "Company name can have less than 3 characters.";
+    }
+    if (values.status === status[0]) {
+      errors.status = "Select status for job post.";
     }
     return errors;
   };
@@ -83,8 +92,18 @@ const AddJobPostsComponent = () => {
                 Job post added successfully. You can add more.
               </Alert>
             )}
+            {!authContext.isAuthenticated && (
+              <Alert key="warning" variant="warning">
+                Please login first.
+              </Alert>
+            )}
             <ErrorMessage
               name="jobDescription"
+              className="alert alert-warning"
+              component="div"
+            />
+            <ErrorMessage
+              name="status"
               className="alert alert-warning"
               component="div"
             />
