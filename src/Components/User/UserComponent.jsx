@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { retrieveUserDetails } from "../api/UserServicesApi";
+import UserJobPostsComponent from "./UserJobPostsComponents";
+import Card from "react-bootstrap/Card";
 
 const UserComponent = () => {
   const [username, setUsername] = useState(null);
@@ -9,27 +11,22 @@ const UserComponent = () => {
   useEffect(() => {
     retrieveUserDetails()
       .then((response) => {
-        setUsername(response.data.fullName)
-        setEmail(response.data.email)
+        setUsername(response.data.fullName);
+        setEmail(response.data.email);
       })
       .catch((error) => console.log(error));
   }, []);
   return (
-    <div className="container m-5">
-      <h1>This is user Component!</h1>
-      <div>User Name: {username}</div>
-      <div>Email: {email}</div>
+    <>
+      <div>
+        <Card.Title className="m-3 d-flex justify-content-end">
+          {username}
+        </Card.Title>
+        <Link className="m-3 d-flex justify-content-end" to="/user-resumes">Resumes</Link>
+      </div>
 
-      <Link to="/add-job-posts" className="m-2">
-        <Button className="btn btn-success">+ Add New Job Posts</Button>
-      </Link>
-      <Link to="/user-job-posts" className="m-2">
-        <Button className="btn">Your job Posts</Button>
-      </Link>
-      <Link to="/user-resumes" className="m-2">
-        <Button className="btn">Your Resumes</Button>
-      </Link>
-    </div>
+      <UserJobPostsComponent />
+    </>
   );
 };
 

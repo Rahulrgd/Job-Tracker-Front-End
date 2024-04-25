@@ -40,8 +40,7 @@ const AddJobPostsComponent = () => {
 
   const onSubmit = async (values) => {
     setFormValues(values);
-    console.log(formValues);
-    addJobsApi(formValues)
+    await addJobsApi(values)
       .then((response) => {
         console.log(response);
         if (response.status === 201) {

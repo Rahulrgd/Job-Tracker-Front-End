@@ -12,7 +12,8 @@ import AllJobPostsComponent from "./Components/JobTracker/AllJobPosts";
 import AddJobPostsComponent from "./Components/JobTracker/AddJobPostsComponent";
 import UserComponent from "./Components/User/UserComponent";
 import UserJobPostsComponent from "./Components/User/UserJobPostsComponents";
-import UsersResumeComponent from "./Components/User/UsersResumes";
+import UsersResumeComponent from "./Components/User/UsersResumesComponent";
+import UploadResumeComponent from "./Components/ResumeComponents/UploadResumeComponent";
 
 function AuthenticatedRoute({ children }) {
   const authContext = useAuth();
@@ -39,14 +40,6 @@ function App() {
                 </AuthenticatedRoute>
               }
             />
-            {/* <Route
-              path="/welcome/:username"
-              element={
-                <AuthenticatedRoute>
-                  <WelcomeComponenet />
-                </AuthenticatedRoute>
-              }
-            /> */}
             <Route
               path="/user-profile"
               element={
@@ -68,6 +61,14 @@ function App() {
               element={
                 <AuthenticatedRoute>
                   <UsersResumeComponent />
+                </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/upload-resume"
+              element={
+                <AuthenticatedRoute>
+                  <UploadResumeComponent />
                 </AuthenticatedRoute>
               }
             />

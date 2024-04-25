@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { allJobPosts } from "../api/JobPostApiServices";
+import { Link } from "react-router-dom";
 
 export default function AllJobPostsComponent() {
   const [allJobList, setAllJobList] = useState([]);
@@ -42,7 +43,7 @@ export default function AllJobPostsComponent() {
               <td>{item.jobDate}</td>
               <td>
                 {" "}
-                <Button href={item.jobLink}>Link</Button>
+                <a href={item.jobLink} target="_blank">Link</a>
               </td>
             </tr>
           ))}

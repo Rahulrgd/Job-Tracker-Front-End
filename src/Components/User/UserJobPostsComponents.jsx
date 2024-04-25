@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { deleteUserJobPost } from "../api/JobPostApiServices";
 import { retrieveUserJobPosts } from "../api/UserServicesApi";
 import { Alert } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserJobPostsComponent = () => {
   const [userJobList, setUserJobList] = useState([]);
@@ -40,7 +40,7 @@ const UserJobPostsComponent = () => {
     navigate(`/editJobPost/${id}`)
   };
   return (
-    <div className="container mt-5">
+    <div className=" m-3">
       <h1 className="d-flex justify-content-center">Your job Posts</h1>
       <hr />
       <br />
@@ -74,7 +74,7 @@ const UserJobPostsComponent = () => {
               <td>{item.jobDate}</td>
               <td>
                 {" "}
-                <Button href={item.jobLink}>Link</Button>
+                <a href={item.jobLink}>Link</a>
               </td>
               <td>
                 {" "}

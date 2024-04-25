@@ -25,6 +25,9 @@ function NavbarComponent() {
             {isAuthenticated && <Nav.Link as={Link} to="/user-profile">
               User
             </Nav.Link>}
+            {isAuthenticated && <Nav.Link as={Link} to="/add-job-posts">
+              Add Post
+            </Nav.Link>}
           </Nav>
           <Nav>
           {isAuthenticated && (

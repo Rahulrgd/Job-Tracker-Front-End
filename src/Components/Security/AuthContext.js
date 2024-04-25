@@ -31,7 +31,7 @@ export default function AuthProvider({ children }) {
   function logout() {
     setAuthenticated(false);
     setToken(null);
-    setTimeout(()=>window.location.reload(),100)
+    setTimeout(()=>window.location.reload(),1)
   }
   return (
     <AuthContext.Provider
