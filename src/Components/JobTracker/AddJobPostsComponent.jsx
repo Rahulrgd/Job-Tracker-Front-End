@@ -7,26 +7,15 @@ import { retrieveUserResumes } from "../api/ResumeServicesApi";
 
 const AddJobPostsComponent = () => {
   const status = [
-    "Select An Option",
-    "BOOKMARKED",
-    "APPLIED",
-    "ACTIVE",
-    "COMPLETED",
-    "CANCLED",
-    "REJECTED",
-    "SELECTED",
+    { id: 0, value: "Select An Option" },
+    { id: 1, value: "BOOKMARKED" },
+    { id: 2, value: "APPLIED" },
+    { id: 3, value: "ACTIVE" },
+    { id: 4, value: "COMPLETED" },
+    { id: 5, value: "CANCLED" },
+    { id: 6, value: "REJECTED" },
+    { id: 7, value: "SELECTED" },
   ];
-
-// const status = [
-//   {id:0, value: "Select An Option"},
-//   {id:1, value:"BOOKMARKED"},
-//   {id:2, value:"APPLIED"},
-//   {id:3, value:"ACTIVE"},
-//   {id:4, value:"COMPLETED"},
-//   {id:5, value:"CANCLED"},
-//   {id:6, value:"REJECTED"},
-//   {id:7, value:"SELECTED"}
-// ]
 
   const [formValues, setFormValues] = useState({
     jobTitle: "",
@@ -48,12 +37,13 @@ const AddJobPostsComponent = () => {
     status: "",
   };
 
+  // ========================onSubmit Logic======================================
   const authContext = useAuth();
 
   const onSubmit = async (values) => {
     setFormValues(values);
-    console.log("onSubmit is working...")
-    console.log(values.status);
+    console.log("onSubmit is working...");
+    console.log(values);
     await addJobsApi(values)
       .then((response) => {
         console.log(response);
@@ -68,7 +58,7 @@ const AddJobPostsComponent = () => {
       setMessage(false);
     }, 3000);
   };
-
+  // =========================Validate Logic=====================================
   const validate = (values) => {
     const errors = {};
     if (values.jobDescription.length < 2) {
@@ -85,7 +75,7 @@ const AddJobPostsComponent = () => {
     }
     return errors;
   };
-
+  // ===================Retrieving Resumes============================
   const [userResumeList, setUserResumeList] = useState([]);
 
   const retrieveData = () => {
@@ -102,6 +92,7 @@ const AddJobPostsComponent = () => {
 
   return (
     <div className="container m-5">
+      {/* ==========================Formic Logic================================ */}
       <Formik
         initialValues={formValues}
         enableReinitialize={true}
@@ -114,6 +105,7 @@ const AddJobPostsComponent = () => {
           <Form>
             <h1>Add Job Posts</h1>
             <br />
+            {/* ====================Alert Message======================== */}
             {message && (
               <Alert key="success" variant="success">
                 Job post added successfully. You can add more.
@@ -144,15 +136,16 @@ const AddJobPostsComponent = () => {
               className="alert alert-warning"
               component="div"
             />
-            <fieldset className="form-group">
+            {/* ==============================Input Fields================================== */}
+            <fieldset className="my-3 form-group">
               <label className="label m-1">Job Title</label>
               <Field className="form-control" name="jobTitle" type="text" />
             </fieldset>
-            <fieldset className="form-group">
+            <fieldset className="my-3 form-group">
               <label className="label m-1">Company Name</label>
               <Field className="form-control" name="companyName" type="text" />
             </fieldset>
-            <fieldset className="form-group">
+            <fieldset className="my-3 form-group">
               <label className="label m-1">Description</label>
               <Field
                 className="form-control"
@@ -160,11 +153,12 @@ const AddJobPostsComponent = () => {
                 type="text"
               />
             </fieldset>
-            <fieldset className="form-group">
+            <fieldset className="my-3 form-group">
               <label className="label m-1">Link</label>
               <Field className="form-control" name="jobLink" type="href" />
             </fieldset>
-            <fieldset className="form-group">
+            {/* ==================Select Status================================== */}
+            <fieldset className="my-3 form-group">
               <label className="label m-1">Status</label>
               <Field
                 className="form-control"
@@ -172,20 +166,26 @@ const AddJobPostsComponent = () => {
                 as="select"
                 type="text"
               >
-                {status.map((item, index) => (
-                  <option key={index + 1} value={item}>
-                    {item}
+                {status.map((item) => (
+                  <option key={item.id} value={item.value}>
+                    {item.value}
                   </option>
                 ))}
               </Field>
             </fieldset>
-            <fieldset className="form-group">
+
+            {/* =====================Select Date======================================= */}
+            <fieldset className="my-3 form-group">
               <label className="label m-1">Date</label>
               <Field className="form-control" name="jobDate" type="date" />
             </fieldset>
-            <button className="btn btn-success m-3" type="submit">
-              Add Job
-            </button>
+
+            {/* ===========================Add Job Button========================================= */}
+            <div className="my-3 d-flex justify-content-end">
+              <button className="btn btn-success m-3" type="submit">
+                Add Job
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

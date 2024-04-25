@@ -64,8 +64,8 @@ export default function AllJobPostsComponent() {
               <td >{item.username}</td>
               <td >{item.jobTitle}</td>
               <td >{item.companyName}</td>
-              <td >{item.jobDescription}</td>
-              <td>{item.jobDate}</td>
+              <td className="w-100">{item.jobDescription}</td>
+              <td className="w-100">{item.jobDate}</td>
               <td>
                 <a href={item.jobLink} target="_blank">
                   Link

@@ -41,8 +41,9 @@ const UserJobPostsComponent = () => {
   };
   return (
     <div className=" m-3">
+      {/* <hr /> */}
+      <br />
       <h1 className="d-flex justify-content-center">Your job Posts</h1>
-      <hr />
       <br />
       {deleteMessage && (
         <Alert key="danger" variant="danger">

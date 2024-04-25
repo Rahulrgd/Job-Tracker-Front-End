@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { useAuth } from "../Security/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 
 function LoginComponent() {
   const [formValues, setFormValues] = useState({
@@ -20,15 +21,23 @@ function LoginComponent() {
   const authContext = useAuth();
   const navigate = useNavigate();
 
-  const onSubmit = (values) => {
+  const [invalidCredentialsMessage, setInvalidCredentialsMessage] =
+    useState(false);
+
+  const onSubmit = async (values) => {
     const body = {
       username: values.email,
       password: values.password,
     };
     setFormValues(values);
-    if (authContext.login(body)) {
-      navigate("/all-job-posts");
-    }
+    const authentication = await (authContext.login(body))
+      if (authentication) {
+        navigate("/all-job-posts");
+      } else {
+        setInvalidCredentialsMessage(true);
+        setTimeout(() => setInvalidCredentialsMessage(false), 3000);
+      }
+    
   };
 
   return (
@@ -48,6 +57,11 @@ function LoginComponent() {
               component="div"
               className="alert alert-warning"
             />
+            {invalidCredentialsMessage && (
+              <Alert key="danger" variant="danger">
+                Invalid Credentials.
+              </Alert>
+            )}
             <fieldset className="form-group">
               <label className="label m-1">Email</label>
               <Field className="form-control" name="email" type="email" />
@@ -57,9 +71,7 @@ function LoginComponent() {
               <Field className="form-control" name="password" type="password" />
             </fieldset>
             <div className="d-flex justify-content-end">
-              <button className="btn btn-success m-3">
-                Login
-              </button>
+              <button className="btn btn-success m-3">Login</button>
             </div>
           </Form>
         )}

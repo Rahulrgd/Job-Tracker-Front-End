@@ -18,11 +18,16 @@ const UserComponent = () => {
   }, []);
   return (
     <>
-      <div>
-        <Link className="m-3 d-flex justify-content-end text-decoration-none" to="/user-resumes"><button className="btn btn-secondary">Resumes</button></Link>
-        <Card.Title className="m-3 d-flex justify-content-end">
+      <div className="m-3 d-flex justify-content-between">
+        <Card.Title className=" d-inline justify-content-end">
           {username}
         </Card.Title>
+        <Link
+          className=" d-inline justify-content-start text-decoration-none"
+          to="/user-resumes"
+        >
+          <button className="btn btn-secondary">Resumes</button>
+        </Link>
       </div>
 
       <UserJobPostsComponent />
