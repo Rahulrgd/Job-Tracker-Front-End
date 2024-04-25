@@ -1,12 +1,13 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addJobsApi } from "../api/JobPostApiServices";
 import { Alert } from "react-bootstrap";
 import { useAuth } from "../Security/AuthContext";
+import { retrieveUserResumes } from "../api/ResumeServicesApi";
 
 const AddJobPostsComponent = () => {
   const status = [
-    "Select an option",
+    "Select An Option",
     "BOOKMARKED",
     "APPLIED",
     "ACTIVE",
@@ -15,6 +16,17 @@ const AddJobPostsComponent = () => {
     "REJECTED",
     "SELECTED",
   ];
+
+// const status = [
+//   {id:0, value: "Select An Option"},
+//   {id:1, value:"BOOKMARKED"},
+//   {id:2, value:"APPLIED"},
+//   {id:3, value:"ACTIVE"},
+//   {id:4, value:"COMPLETED"},
+//   {id:5, value:"CANCLED"},
+//   {id:6, value:"REJECTED"},
+//   {id:7, value:"SELECTED"}
+// ]
 
   const [formValues, setFormValues] = useState({
     jobTitle: "",
@@ -40,6 +52,8 @@ const AddJobPostsComponent = () => {
 
   const onSubmit = async (values) => {
     setFormValues(values);
+    console.log("onSubmit is working...")
+    console.log(values.status);
     await addJobsApi(values)
       .then((response) => {
         console.log(response);
@@ -71,6 +85,20 @@ const AddJobPostsComponent = () => {
     }
     return errors;
   };
+
+  const [userResumeList, setUserResumeList] = useState([]);
+
+  const retrieveData = () => {
+    retrieveUserResumes()
+      .then((response) => {
+        setUserResumeList(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    retrieveData();
+  }, []);
 
   return (
     <div className="container m-5">

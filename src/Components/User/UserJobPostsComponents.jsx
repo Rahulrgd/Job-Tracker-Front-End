@@ -84,7 +84,7 @@ const UserJobPostsComponent = () => {
                     handleEditJobPost(item.id);
                   }}
                 >
-                  Edit
+                  Update
                 </Button>
               </td>
               <td>

@@ -16,7 +16,7 @@ function NavbarComponent() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand as={Link} to="/all-job-posts">
+        <Navbar.Brand className="fw-bold text-secondary" as={Link} to="/all-job-posts">
           Job-Tracker
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

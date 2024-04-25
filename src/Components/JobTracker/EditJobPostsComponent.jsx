@@ -74,11 +74,14 @@ const EditJobPostsComponent = (item) => {
 
   const validate = (values) => {
     const errors = {};
-    if (values.jobDescription.length < 2) {
-      errors.jobDescription = "Description can have less than 3 characters.";
+    if (values.jobDescription.length < 2 || values.jobDescription.length > 522) {
+      errors.jobDescription = `Description length can not be less than 3  or greater than 522 characters: ${values.jobDescription.length}`;
     }
-    if (values.jobTitle.length < 2) {
-      errors.jobTitle = "Job Title can have less than 3 characters.";
+    if (values.jobTitle.length < 2 || values.jobTitle.length > 255) {
+      errors.jobTitle = `Job Title length can not be less than 3 and more than 255 characters: ${values.jobTitle.length}`;
+    }
+    if (values.jobLink.length < 2 || values.jobLink.length > 522) {
+      errors.jobTitle = `Job Link length can not be less than 3 and more than 522 characters: ${values.jobLink.length}`;
     }
     if (values.companyName.length < 2) {
       errors.companyName = "Company name can have less than 3 characters.";
@@ -100,7 +103,7 @@ const EditJobPostsComponent = (item) => {
       >
         {(props) => (
           <Form>
-            <h1>Edit Job Posts</h1>
+            <h1>Update Job Posts</h1>
             <br />
             {message && (
               <Alert key="success" variant="success">
@@ -167,7 +170,7 @@ const EditJobPostsComponent = (item) => {
               <Field className="form-control" name="jobDate" type="date" />
             </fieldset>
             <button className="btn btn-success m-3" type="submit">
-              Edit Job Post
+              Update Job Post
             </button>
           </Form>
         )}

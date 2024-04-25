@@ -10,3 +10,5 @@ export const deleteUserResumeWitId = (resumeId) =>
 
 export const uploadResume = (formData) => apiClient.post("/v1/create-resume", formData, {headers:{ "Content-Type": "multipart/form-data"}});
 
+export const downloadUserResume = (resumeId) => apiClient.get(`/v1/download-user-resume?resumeId=${resumeId}`)
+

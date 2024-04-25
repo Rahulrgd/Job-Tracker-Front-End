@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { deleteUserJobPost } from "../api/JobPostApiServices";
 import { Alert } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { deleteUserResumeWitId, retrieveUserResumes } from "../api/ResumeServicesApi";
+import { Link } from "react-router-dom";
+import {
+  deleteUserResumeWitId,
+  downloadUserResume,
+  retrieveUserResumes,
+} from "../api/ResumeServicesApi";
+import save from "save-file";
 
 const UsersResumeComponent = () => {
   const [userResumeList, setUserResumeList] = useState([]);
@@ -14,7 +18,6 @@ const UsersResumeComponent = () => {
     retrieveUserResumes()
       .then((response) => {
         setUserResumeList(response.data);
-
       })
       .catch((error) => console.log(error));
   };
@@ -38,9 +41,26 @@ const UsersResumeComponent = () => {
       .catch((error) => console.log(error));
   };
 
-  const navigate = useNavigate();
-  const handleEditJobPost = (id) => {
-    // navigate(`/editJobPost/${id}`);
+  const saveFile = (data, resumeName) => {
+    const url = window.URL.createObjectURL(new Blob([data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", resumeName);
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+  };
+
+  const [downloadMeassage, setDownloadMessage] = useState(false);
+
+  const handleDownloadJobPost = (resumeId, resumeName) => {
+    downloadUserResume(resumeId)
+      .then((response) => {
+        save(response.data, `${resumeName}`);
+        setDownloadMessage(true);
+        setTimeout(() => setDownloadMessage(false), 3000);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -48,11 +68,23 @@ const UsersResumeComponent = () => {
       <div className=" m-3">
         <h1 className="d-flex justify-content-center">Your Resumes</h1>
         <hr />
-        <div className="m-3 d-flex justify-content-end"><Link to="/upload-resume">Upload Resume</Link></div>
+        <div className="m-3 d-flex justify-content-end">
+          <Link
+            to="/upload-resume"
+            className="m-3 d-flex justify-content-end text-decoration-none"
+          >
+            <button className="btn btn-secondary">Upload Resume</button>
+          </Link>
+        </div>
         <br />
         {deleteMessage && (
           <Alert key="danger" variant="danger">
             Resume Post Deleted
+          </Alert>
+        )}
+        {downloadMeassage && (
+          <Alert key="success" variant="success">
+            Downloading resume....
           </Alert>
         )}
         <Table striped bordered hover>
@@ -69,19 +101,15 @@ const UsersResumeComponent = () => {
               <tr key={item.resumeId}>
                 <td>{index + 1}</td>
                 <td>{item.resumeName}</td>
-                {/* <td>
-                  {" "}
-                  <a href={item.jobLink}>Link</a>
-                </td> */}
-                <td>
+                <td className="">
                   {" "}
                   <Button
-                    className="btn-success"
+                    className="btn-warning"
                     onClick={() => {
-                      handleEditJobPost(item.id);
+                      handleDownloadJobPost(item.resumeId, item.resumeName);
                     }}
                   >
-                    Edit
+                    Download
                   </Button>
                 </td>
                 <td>
