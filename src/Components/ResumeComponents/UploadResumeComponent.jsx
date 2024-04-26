@@ -37,7 +37,7 @@ const UploadResumeComponent = () => {
   };
 
   return (
-    <div className="m-3">
+    <div className="p-3">
       <br />
       <div className="m-3 d-flex justify-content-center">
         <hr />
@@ -75,7 +75,7 @@ const UploadResumeComponent = () => {
                 }}
               />
             </fieldset>
-            <div className="m-3 d-flex justify-content-end">
+            <div className="py-3 d-flex justify-content-end">
               <button
                 className="btn btn-success"
                 type="submit"

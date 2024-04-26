@@ -26,7 +26,8 @@ const UserComponent = () => {
           className=" d-inline justify-content-start text-decoration-none"
           to="/user-resumes"
         >
-          <button className="btn btn-secondary">Resumes</button>
+          {/* <button className="btn btn-secondary">Resumes</button> */}
+          Resumes
         </Link>
       </div>
 

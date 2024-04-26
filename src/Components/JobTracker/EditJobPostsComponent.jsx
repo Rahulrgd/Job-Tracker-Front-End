@@ -92,7 +92,7 @@ const EditJobPostsComponent = (item) => {
     return errors;
   };
   return (
-    <div className="container m-5">
+    <div className="container p-3">
       <Formik
         initialValues={formValues}
         enableReinitialize={true}

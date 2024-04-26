@@ -61,16 +61,27 @@ const AddJobPostsComponent = () => {
   // =========================Validate Logic=====================================
   const validate = (values) => {
     const errors = {};
-    if (values.jobDescription.length < 2) {
-      errors.jobDescription = "Description can have less than 3 characters.";
+
+    if (values.jobTitle.length <= 3 || values.jobTitle.length > 255) {
+      errors.jobTitle = `Title can not be less than 3 or greater than 255 characters: ${values.jobTitle.length}`;
     }
-    if (values.jobTitle.length < 2) {
-      errors.jobTitle = "Job Title can have less than 3 characters.";
+
+    if (values.companyName.length <= 3 || values.companyName.length > 255) {
+      errors.companyName = `Company name can not be less than 3 or greater than 255 characters: ${values.companyName.length}`;
     }
-    if (values.companyName.length < 2) {
-      errors.companyName = "Company name can have less than 3 characters.";
+    if (
+      values.jobDescription.length <= 3 ||
+      values.jobDescription.length > 522
+    ) {
+      errors.jobDescription = `Description name can not be less than 3 or greater than 522 characters: ${values.jobDescription.length}`;
     }
-    if (values.status === status[0]) {
+    if (
+      values.jobLink.length <= 3 ||
+      values.jobLink.length > 522
+    ) {
+      errors.jobLink = `Job Link can not be less than 3 or greater than 522 characters: ${values.jobLink.length}`;
+    }
+    if (values.status.value === "Select An Option") {
       errors.status = "Select status for job post.";
     }
     return errors;
@@ -91,7 +102,7 @@ const AddJobPostsComponent = () => {
   }, []);
 
   return (
-    <div className="container m-5">
+    <div className="container p-3">
       {/* ==========================Formic Logic================================ */}
       <Formik
         initialValues={formValues}
@@ -116,23 +127,36 @@ const AddJobPostsComponent = () => {
                 Please login first.
               </Alert>
             )}
+
+            <ErrorMessage
+              name="jobTitle"
+              className="alert alert-warning"
+              component="div"
+            />
+
+            <ErrorMessage
+              name="companyName"
+              className="alert alert-warning"
+              component="div"
+            />
             <ErrorMessage
               name="jobDescription"
               className="alert alert-warning"
               component="div"
             />
             <ErrorMessage
+              name="jobLink"
+              className="alert alert-warning"
+              component="div"
+            />
+
+            {/* <ErrorMessage
+              name="jobLink"
+              className="alert alert-warning"
+              component="div"
+            /> */}
+            <ErrorMessage
               name="status"
-              className="alert alert-warning"
-              component="div"
-            />
-            <ErrorMessage
-              name="jobTitle"
-              className="alert alert-warning"
-              component="div"
-            />
-            <ErrorMessage
-              name="jobCompany"
               className="alert alert-warning"
               component="div"
             />

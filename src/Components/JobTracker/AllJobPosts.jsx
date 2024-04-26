@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { addJobPostWithId, allJobPosts } from "../api/JobPostApiServices";
 import { Link } from "react-router-dom";
-import { Alert } from "react-bootstrap";
+import { Alert, Container } from "react-bootstrap";
 import { useAuth } from "../Security/AuthContext";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function AllJobPostsComponent() {
   const [allJobList, setAllJobList] = useState([]);
@@ -36,7 +38,7 @@ export default function AllJobPostsComponent() {
   };
 
   return (
-    <div className="m-5">
+    <div className="p-3">
       <h1>Dashboard</h1>
       <br />
       {addMessage && (
@@ -44,47 +46,60 @@ export default function AllJobPostsComponent() {
           Job post added to your account successfully
         </Alert>
       )}
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th></th>
-            <th>User</th>
-            <th>Job Title</th>
-            <th>Company</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Link</th>
-            {authContext.isAuthenticated && <th></th>}
-          </tr>
-        </thead>
-        <tbody>
+      <Container fluid>
+        <div className=" text-muted d-flex justify-content-start">
+          Total Jobs: {allJobList.length}
+        </div>
+        <Row className="d-flex justify-conent-center">
           {allJobList.map((item, index) => (
-            <tr key={item.jobPostId}>
-              <td>{index + 1}</td>
-              <td >{item.username}</td>
-              <td >{item.jobTitle}</td>
-              <td >{item.companyName}</td>
-              <td className="w-100">{item.jobDescription}</td>
-              <td className="w-100">{item.jobDate}</td>
-              <td>
-                <a href={item.jobLink} target="_blank">
-                  Link
-                </a>
-              </td>
-              {authContext.isAuthenticated && (
-                <td>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleAddJobPost(item.jobPostId)}
+            <Col className="" md="auto">
+              <Card
+                key={item.jobPostId}
+                className="my-3"
+                style={{ width: "18rem" }}
+              >
+                <Card.Body>
+                  <Card.Title className=" text-muted d-flex justify-content-start">
+                    {item.jobTitle}
+                  </Card.Title>
+                  <Card.Subtitle className=" text-muted d-flex justify-content-start">
+                    {item.companyName}
+                  </Card.Subtitle>
+
+                  <div className="py-2 d-flex d-flex justify-content-end">
+                    <Card.Subtitle className="text-muted ">
+                      {item.jobDate}
+                    </Card.Subtitle>
+                  </div>
+
+                  <Card.Text
+                    style={{ height: "9rem" }}
+                    className="overflow-auto"
                   >
-                    add
-                  </button>
-                </td>
-              )}
-            </tr>
+                    {item.jobDescription}
+                  </Card.Text>
+                  <Card.Subtitle className="mb-2 text-muted d-flex justify-content-end">
+                    {item.username}
+                  </Card.Subtitle>
+                  <div className="d-flex justify-content-between">
+                    <a href={item.jobLink} target="_blank">
+                      Link
+                    </a>
+                    {authContext.isAuthenticated && (
+                      <Button
+                        onClick={() => handleAddJobPost(item.jobPostId)}
+                        variant="primary"
+                      >
+                        Add
+                      </Button>
+                    )}
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
           ))}
-        </tbody>
-      </Table>
+        </Row>
+      </Container>
     </div>
   );
 }

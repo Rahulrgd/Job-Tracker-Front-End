@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { deleteUserJobPost } from "../api/JobPostApiServices";
 import { retrieveUserJobPosts } from "../api/UserServicesApi";
-import { Alert } from "react-bootstrap";
+import { Alert, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const UserJobPostsComponent = () => {
   const [userJobList, setUserJobList] = useState([]);
@@ -37,11 +39,10 @@ const UserJobPostsComponent = () => {
 
   const navigate = useNavigate();
   const handleEditJobPost = (id) => {
-    navigate(`/editJobPost/${id}`)
+    navigate(`/editJobPost/${id}`);
   };
   return (
     <div className=" m-3">
-      {/* <hr /> */}
       <br />
       <h1 className="d-flex justify-content-center">Your job Posts</h1>
       <br />
@@ -50,57 +51,69 @@ const UserJobPostsComponent = () => {
           Job Post Deleted
         </Alert>
       )}
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Job Title</th>
-            <th>Company</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Date</th>
-            <th>Link</th>
-            <th>Delete</th>
-            <th>Edit</th>
-          </tr>
-        </thead>
-        <tbody>
+
+      {/* ==================================================== */}
+      <Container fluid>
+        <div className=" text-muted d-flex justify-content-start">
+          Total Jobs: {userJobList.length}
+        </div>
+        <Row className="d-flex justify-conent-center">
           {userJobList.map((item, index) => (
-            <tr key={item.id}>
-              <td>{index + 1}</td>
-              <td>{item.jobTitle}</td>
-              <td>{item.companyName}</td>
-              <td>{item.jobDescription}</td>
-              <td>{item.status}</td>
-              <td>{item.jobDate}</td>
-              <td>
-                {" "}
-                <a href={item.jobLink}>Link</a>
-              </td>
-              <td>
-                {" "}
-                <Button
-                  className="btn-success"
-                  onClick={() => {
-                    handleEditJobPost(item.id);
-                  }}
-                >
-                  Update
-                </Button>
-              </td>
-              <td>
-                {" "}
-                <Button
-                  className="btn-danger"
-                  onClick={() => handleDeleteJobPost(item.id)}
-                >
-                  Delete
-                </Button>
-              </td>
-            </tr>
+            <Col className="" md="auto">
+              <Card
+                key={item.jobPostId}
+                className="my-3"
+                style={{ width: "18rem" }}
+              >
+                <Card.Body>
+                  <Card.Title className=" text-muted d-flex justify-content-start">
+                    {item.jobTitle}
+                  </Card.Title>
+                  <Card.Subtitle className=" text-muted d-flex justify-content-start">
+                    {item.companyName}
+                  </Card.Subtitle>
+
+                  <div className="py-2 d-flex d-flex justify-content-end">
+                    <Card.Subtitle className="text-muted ">
+                      {item.jobDate}
+                    </Card.Subtitle>
+                  </div>
+
+                  <Card.Text
+                    style={{ height: "9rem" }}
+                    className="overflow-auto"
+                  >
+                    {item.jobDescription}
+                  </Card.Text>
+                  <Card.Subtitle className="mb-2 text-muted d-flex justify-content-end">
+                    {item.status}
+                  </Card.Subtitle>
+                  <div className="d-flex justify-content-between">
+                    <a href={item.jobLink} target="_blank">
+                      Link
+                    </a>
+                    <Button
+                      className="btn-success"
+                      onClick={() => {
+                        handleEditJobPost(item.id);
+                      }}
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      className="btn-danger"
+                      onClick={() => handleDeleteJobPost(item.id)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
           ))}
-        </tbody>
-      </Table>
+        </Row>
+      </Container>
+      {/* ================================================================= */}
     </div>
   );
 };

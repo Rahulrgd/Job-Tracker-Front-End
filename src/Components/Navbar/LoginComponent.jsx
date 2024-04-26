@@ -70,14 +70,14 @@ function LoginComponent() {
               <label className="label m-1">Password</label>
               <Field className="form-control" name="password" type="password" />
             </fieldset>
-            <div className="d-flex justify-content-end">
+            <fieldset className="d-flex justify-content-end">
               <button className="btn btn-success m-3">Login</button>
-            </div>
+            </fieldset>
           </Form>
         )}
       </Formik>
       <div className="d-flex justify-content-center m-5 text-secondary">
-        To create account
+        Signup
         <Link className="mx-2" to="/signup">
           click here.
         </Link>

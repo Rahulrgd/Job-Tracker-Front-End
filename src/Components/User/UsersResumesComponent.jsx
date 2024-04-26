@@ -68,12 +68,16 @@ const UsersResumeComponent = () => {
       <div className=" m-3">
         <h1 className="d-flex justify-content-center">Your Resumes</h1>
         <hr />
+        <div className=" text-muted d-flex justify-content-start">
+          Total Resume: {userResumeList.length}
+        </div>
         <div className="m-3 d-flex justify-content-end">
           <Link
             to="/upload-resume"
             className="m-3 d-flex justify-content-end text-decoration-none"
           >
-            <button className="btn btn-secondary">Upload Resume</button>
+            {/* <button className="btn btn-secondary">Upload Resume</button> */}
+            Upload Resume
           </Link>
         </div>
         <br />

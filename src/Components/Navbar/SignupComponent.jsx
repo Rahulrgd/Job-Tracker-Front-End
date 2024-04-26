@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Alert } from "react-bootstrap";
 import { signUpServicesApi } from "../api/AuthenticationApiServices";
+import { Link } from "react-router-dom";
 
 function SignupComponent() {
   const [formValues, setFormValues] = useState({
@@ -48,10 +49,11 @@ function SignupComponent() {
 
     try {
       const response = await signUpServicesApi(user);
+      clearValues();
       setSuccessMessage(true);
       setTimeout(() => {
-        clearValues();
-      }, 0);
+        setSuccessMessage(false);
+      }, 3000);
     } catch (error) {
       console.log(error);
     }
@@ -112,9 +114,14 @@ function SignupComponent() {
                 name="confirmPassword"
               />
             </fieldset>
-            <button className="btn btn-success" type="submit">
-              Sign Up
-            </button>
+            <div className="d-flex justify-content-end">
+              <button className="btn btn-success" type="submit">
+                Sign Up
+              </button>
+            </div>
+            <div className="pt-5 text-muted d-flex justify-content-center">
+              <Link to="/login">Login</Link>
+            </div>
           </Form>
         )}
       </Formik>

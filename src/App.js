@@ -88,7 +88,7 @@ function App() {
                 </AuthenticatedRoute>
               }
             />
-            <Route path="/" element={<WelcomeComponenet />} />
+            <Route path="/" element={<AllJobPostsComponent />} />
             <Route path="/all-job-posts" element={<AllJobPostsComponent />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
