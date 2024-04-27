@@ -116,7 +116,7 @@ const EditJobPostsComponent = (item) => {
             <br />
             {message && (
               <Alert key="success" variant="success">
-                Job post edited successfully. You can add more.
+                Job post edited successfully.
               </Alert>
             )}
             <ErrorMessage
