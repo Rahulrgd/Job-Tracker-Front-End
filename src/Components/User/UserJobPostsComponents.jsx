@@ -59,7 +59,7 @@ const UserJobPostsComponent = () => {
         </div>
         <Row className="d-flex justify-conent-center">
           {userJobList.map((item, index) => (
-            <Col className="" md="auto">
+            <Col className="" md="auto" key={index+1}>
               <Card
                 key={item.jobPostId}
                 className="my-3"
@@ -80,7 +80,7 @@ const UserJobPostsComponent = () => {
                   </div>
 
                   <Card.Text
-                    style={{ height: "9rem" }}
+                    style={{ height: "15rem" }}
                     className="overflow-auto"
                   >
                     {item.jobDescription}

@@ -65,7 +65,7 @@ const EditJobPostsComponent = (item) => {
 
       setTimeout(() => {
         setMessage(false);
-        navigate("/user-job-posts")
+        navigate("/user-job-posts");
       }, 3000);
     } catch (error) {
       console.log(error);
@@ -74,21 +74,30 @@ const EditJobPostsComponent = (item) => {
 
   const validate = (values) => {
     const errors = {};
-    if (values.jobDescription.length < 2 || values.jobDescription.length > 522) {
-      errors.jobDescription = `Description length can not be less than 3  or greater than 522 characters: ${values.jobDescription.length}`;
-    }
-    if (values.jobTitle.length < 2 || values.jobTitle.length > 255) {
+
+    if (values.jobTitle.length < 3 || values.jobTitle.length > 255) {
       errors.jobTitle = `Job Title length can not be less than 3 and more than 255 characters: ${values.jobTitle.length}`;
     }
-    if (values.jobLink.length < 2 || values.jobLink.length > 522) {
-      errors.jobTitle = `Job Link length can not be less than 3 and more than 522 characters: ${values.jobLink.length}`;
-    }
-    if (values.companyName.length < 2) {
+
+    if (values.companyName.length < 3) {
       errors.companyName = "Company name can have less than 3 characters.";
     }
+
+    if (
+      values.jobDescription.length < 3 ||
+      values.jobDescription.length > 2560
+    ) {
+      errors.jobDescription = `Description length can not be less than 3  or greater than 2560 characters: ${values.jobDescription.length}`;
+    }
+
+    if (values.jobLink.length < 3 || values.jobLink.length > 2048) {
+      errors.jobTitle = `Job Link length can not be less than 3 and more than 2048 characters: ${values.jobLink.length}`;
+    }
+
     if (values.status === status[0]) {
       errors.status = "Select status for job post.";
     }
+
     return errors;
   };
   return (
@@ -144,6 +153,8 @@ const EditJobPostsComponent = (item) => {
                 className="form-control"
                 name="jobDescription"
                 type="text"
+                as="textarea"
+                style={{ height: "10rem" }}
               />
             </fieldset>
             <fieldset className="form-group">

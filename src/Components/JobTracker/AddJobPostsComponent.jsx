@@ -62,24 +62,24 @@ const AddJobPostsComponent = () => {
   const validate = (values) => {
     const errors = {};
 
-    if (values.jobTitle.length <= 3 || values.jobTitle.length > 255) {
+    if (values.jobTitle.length < 3 || values.jobTitle.length > 255) {
       errors.jobTitle = `Title can not be less than 3 or greater than 255 characters: ${values.jobTitle.length}`;
     }
 
-    if (values.companyName.length <= 3 || values.companyName.length > 255) {
+    if (values.companyName.length < 3 || values.companyName.length > 255) {
       errors.companyName = `Company name can not be less than 3 or greater than 255 characters: ${values.companyName.length}`;
     }
     if (
-      values.jobDescription.length <= 3 ||
-      values.jobDescription.length > 522
+      values.jobDescription.length < 3 ||
+      values.jobDescription.length > 2550
     ) {
-      errors.jobDescription = `Description name can not be less than 3 or greater than 522 characters: ${values.jobDescription.length}`;
+      errors.jobDescription = `Description can not be less than 3 or greater than 2550 characters: ${values.jobDescription.length}`;
     }
     if (
-      values.jobLink.length <= 3 ||
-      values.jobLink.length > 522
+      values.jobLink.length < 3 ||
+      values.jobLink.length > 2048
     ) {
-      errors.jobLink = `Job Link can not be less than 3 or greater than 522 characters: ${values.jobLink.length}`;
+      errors.jobLink = `Job Link can not be less than 3 or greater than 2048 characters: ${values.jobLink.length}`;
     }
     if (values.status.value === "Select An Option") {
       errors.status = "Select status for job post.";
@@ -149,12 +149,6 @@ const AddJobPostsComponent = () => {
               className="alert alert-warning"
               component="div"
             />
-
-            {/* <ErrorMessage
-              name="jobLink"
-              className="alert alert-warning"
-              component="div"
-            /> */}
             <ErrorMessage
               name="status"
               className="alert alert-warning"
@@ -172,9 +166,11 @@ const AddJobPostsComponent = () => {
             <fieldset className="my-3 form-group">
               <label className="label m-1">Description</label>
               <Field
-                className="form-control"
+                className="form-control "
                 name="jobDescription"
                 type="text"
+                as="textarea"
+                style={{ height: "10rem" }}
               />
             </fieldset>
             <fieldset className="my-3 form-group">

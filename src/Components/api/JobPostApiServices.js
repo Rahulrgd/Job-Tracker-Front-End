@@ -17,8 +17,6 @@ export const retrieveJobPostWithId = (jobPostId) =>
   });
 
 export const addJobPostWithId = (jobPostId) => {
-  console.log("form add job Post with id method inside jobpostservices: ");
-  console.log(jobPostId);
   return apiClient.post(`/v1/add-job-with-job-id?jobPostId=${jobPostId}`);
 };
 

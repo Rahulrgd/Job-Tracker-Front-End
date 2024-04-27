@@ -24,11 +24,8 @@ export default function AllJobPostsComponent() {
   const authContext = useAuth();
 
   const handleAddJobPost = async (jobPostId) => {
-    console.log("Handle Add Working Properly");
-    console.log(jobPostId);
     await addJobPostWithId(jobPostId)
       .then((response) => {
-        console.log(response);
         setAddMessage(true);
         setTimeout(() => {
           setAddMessage(false);
@@ -52,7 +49,7 @@ export default function AllJobPostsComponent() {
         </div>
         <Row className="d-flex justify-conent-center">
           {allJobList.map((item, index) => (
-            <Col className="" md="auto">
+            <Col className="" md="auto" key={index+1}>
               <Card
                 key={item.jobPostId}
                 className="my-3"
@@ -73,7 +70,7 @@ export default function AllJobPostsComponent() {
                   </div>
 
                   <Card.Text
-                    style={{ height: "9rem" }}
+                    style={{ height: "15rem" }}
                     className="overflow-auto"
                   >
                     {item.jobDescription}
