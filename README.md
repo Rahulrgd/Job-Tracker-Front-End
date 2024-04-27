@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+## How to contribute?
++ Main branch is locked you can not push directly, only admin can.
++ You can push in "Master Branch" but you need to pull first or else you won't be able to push.
++ You can work on a task mentioned in sprint below, it gets updated every week.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Sprint: (27-4/05/2024)
++ Adding graphs in Users Account for monitoring his performance daily.
++ Chart in Dashboard for top 7 performers with their job applications.
++ Comparision with to 3 performers chart.
 
-## Available Scripts
+## Todos:
++ A search function for easier job posts navigation, having filters for username, category, etc..
++ A new section for Hints & Tips.
++ Interaction features such as comments, likes, and dislikes on jobposts and tips.
+  
+## Job-Tracker Web App:
++ Job-Tracker Web Application allows user's to manage job applications and resumes.
++ User need needs to add the job applications (manually for now!).
 
-In the project directory, you can run:
+## Why do we need to track our job applications?
++ Tracking and Managing job applications has various advantages while looking for jobs. I can give you some examples, like:
+   + You can monitor yourself, how regular you are applying for jobs.
+   + Tracking yourself, gives you the data and helps you to figureout, what needs to be improved.
+   + You will learn about patterns, that changes are actually helpful while job search.
 
-### `npm start`
+## Why we are creating an app like this?
++ Applying 3-5 jobs daily, easily piles-up the number of job applications.
++ It's impossible to track them all within our mind.
++ I used to use Excel sheet, but always felt Excel is not the best suited for this purpose.
++ As I needed various other features, that is not present in Excel.
++ So, I want to create an app that specifically solves this problem.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## How can this app help us?
++ You can follow similar people like you.
++ Which will help you to search jobs more efficiently.
++ You can search good and relevant job 2-3/day. Searching more than this will definately consume your time more.
++ But following more people like you, can easily reduce you time and effort.
++ Which allows you to invest more in your skills, rather than hunting for a job, whole day.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
++ Hint & Tips section allows you to learn about new way to bypass ATS, or how can you imporve your job hunt process.
++ Also creates a database of companies for you. Sometimes you are really interested in many company but totally forgets about them after few days.
