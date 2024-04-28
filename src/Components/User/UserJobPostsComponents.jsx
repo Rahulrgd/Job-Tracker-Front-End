@@ -4,10 +4,11 @@ import Button from "react-bootstrap/Button";
 import { deleteUserJobPost } from "../api/JobPostApiServices";
 import { retrieveUserJobPosts } from "../api/UserServicesApi";
 import { Alert, Container } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import User30DayPerformanceChart from "../CharComponents/User30DayPerformanceChart";
 
 const UserJobPostsComponent = () => {
   const [userJobList, setUserJobList] = useState([]);
@@ -58,8 +59,17 @@ const UserJobPostsComponent = () => {
           Total Jobs: {userJobList.length}
         </div>
         <Row className="d-flex justify-conent-center">
+          {/* ============================User Daily Posts Chart=============================== */}
+          <Col md="auto" style={{ width: "18rem" }}>
+            <Card className="my-3">
+              <Card.Body>
+                <User30DayPerformanceChart />
+              </Card.Body>
+            </Card>
+          </Col>
+          {/* ================================Users All Job Posts Mapping=================================== */}
           {userJobList.map((item, index) => (
-            <Col className="" md="auto" key={index+1}>
+            <Col className="" md="auto" key={index + 1}>
               <Card
                 key={item.jobPostId}
                 className="my-3"

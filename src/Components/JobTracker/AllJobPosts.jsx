@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { addJobPostWithId, allJobPosts } from "../api/JobPostApiServices";
-import { Link } from "react-router-dom";
 import { Alert, Container } from "react-bootstrap";
 import { useAuth } from "../Security/AuthContext";
 import Card from "react-bootstrap/Card";
@@ -49,7 +48,7 @@ export default function AllJobPostsComponent() {
         </div>
         <Row className="d-flex justify-conent-center">
           {allJobList.map((item, index) => (
-            <Col className="" md="auto" key={index+1}>
+            <Col className="" md="auto" key={index + 1}>
               <Card
                 key={item.jobPostId}
                 className="my-3"

@@ -41,16 +41,6 @@ const UsersResumeComponent = () => {
       .catch((error) => console.log(error));
   };
 
-  const saveFile = (data, resumeName) => {
-    const url = window.URL.createObjectURL(new Blob([data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", resumeName);
-    document.body.appendChild(link);
-    link.click();
-    link.parentNode.removeChild(link);
-  };
-
   const [downloadMeassage, setDownloadMessage] = useState(false);
 
   const handleDownloadJobPost = (resumeId, resumeName) => {

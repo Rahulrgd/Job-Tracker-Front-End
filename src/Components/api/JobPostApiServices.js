@@ -23,7 +23,4 @@ export const addJobPostWithId = (jobPostId) => {
 export const updateUserJobPost = (jobPost) =>
   apiClient.put("/v1/update-job-post", jobPost);
 
-// export const addJobPostWithId = (jobPostId) =>
-//   apiClient.post("/v1/add-job-with-job-id", {
-//     params: { jobPostId: jobPostId },
-//   });
+export const retrieveUsersPostPerDay = () => apiClient.get("/v1/retrive-users-per-day-jobposts");
