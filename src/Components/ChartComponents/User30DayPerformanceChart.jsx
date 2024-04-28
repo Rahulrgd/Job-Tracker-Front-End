@@ -11,14 +11,15 @@ const User30DayPerformanceChart = () => {
   const [jobPostsDate, setJobPostsDate] = useState([]);
   const [jobPostsPerDay, setJobPostsPerDay] = useState([]);
 
-  const retrieveData = () => {
-    retrieveUsersPostPerDay()
+  const retrieveData = async () => {
+    await retrieveUsersPostPerDay()
       .then((response) => {
-        setJobPostsDate(response.data.map((item) => item[1]));
+        // const reversedData = response.data.reverse();
+        // setJobPostsDate(reversedData.data.map((item) => item[1]));
+        // setJobPostsPerDay(reversedData.data.map((item) => item[0]));
+        // const reversedData = response.data.reverse();
+        setJobPostsDate(response.data.reverse().map((item) => item[1]));
         setJobPostsPerDay(response.data.map((item) => item[0]));
-        // const labels = response.data.map((item) => item[1]); // Assuming dates are the labels
-        // const datasetData = response.data.map((item) => item[0]);
-        // console.log(response.data);
       })
       .catch((error) => console.error("Error retrieving data:", error));
   };
@@ -27,23 +28,13 @@ const User30DayPerformanceChart = () => {
     retrieveData();
   }, []);
   return (
-    <div className="App">
+    <div className="w-100 overflow-x-auto">
       <Line
         data={{
-          // labels: [
-          //   "TI",
-          //   "ADI",
-          //   "Renesas",
-          //   "Qualcomm",
-          //   "Apple",
-          //   "Huawei",
-          //   "Cirrus",
-          // ],
           labels: jobPostsDate,
           datasets: [
             {
               label: "Dataset 1",
-              // data: [2, 4, 6, 4 * 2, 5 * 2, 6 * 2, 14],
               data: jobPostsPerDay,
               borderColor: "rgb(255, 99, 132)",
               backgroundColor: "rgba(255, 99, 132, 0.5)",

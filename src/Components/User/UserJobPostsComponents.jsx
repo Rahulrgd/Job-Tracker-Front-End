@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import User30DayPerformanceChart from "../CharComponents/User30DayPerformanceChart";
+import User30DayPerformanceChart from "../ChartComponents/User30DayPerformanceChart";
 
 const UserJobPostsComponent = () => {
   const [userJobList, setUserJobList] = useState([]);
@@ -60,7 +60,8 @@ const UserJobPostsComponent = () => {
         </div>
         <Row className="d-flex justify-conent-center">
           {/* ============================User Daily Posts Chart=============================== */}
-          <Col md="auto" style={{ width: "18rem" }}>
+          {/* <Col md="auto" style={{ width: "18rem" }}> */}
+          <Col md="auto" style={{ width: "auto" }}>
             <Card className="my-3">
               <Card.Body>
                 <User30DayPerformanceChart />
