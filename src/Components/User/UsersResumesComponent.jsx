@@ -10,6 +10,7 @@ import {
   retrieveUserResumes,
 } from "../api/ResumeServicesApi";
 import save from "save-file";
+import FileSaver from "file-saver";
 
 const UsersResumeComponent = () => {
   const [userResumeList, setUserResumeList] = useState([]);
@@ -43,8 +44,8 @@ const UsersResumeComponent = () => {
 
   const [downloadMeassage, setDownloadMessage] = useState(false);
 
-  const handleDownloadJobPost = (resumeId, resumeName) => {
-    downloadUserResume(resumeId)
+  const handleDownloadJobPost = async (resumeId, resumeName) => {
+    await downloadUserResume(resumeId)
       .then((response) => {
         save(response.data, `${resumeName}`);
         setDownloadMessage(true);
