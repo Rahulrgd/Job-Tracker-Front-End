@@ -42,8 +42,6 @@ const AddJobPostsComponent = () => {
 
   const onSubmit = async (values) => {
     setFormValues(values);
-    console.log("onSubmit is working...");
-    console.log(values);
     await addJobsApi(values)
       .then((response) => {
         console.log(response);
@@ -52,7 +50,9 @@ const AddJobPostsComponent = () => {
           setFormValues(clearValues);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error)
+      });
 
     setTimeout(() => {
       setMessage(false);
@@ -75,10 +75,7 @@ const AddJobPostsComponent = () => {
     ) {
       errors.jobDescription = `Description can not be less than 3 or greater than 2550 characters: ${values.jobDescription.length}`;
     }
-    if (
-      values.jobLink.length < 3 ||
-      values.jobLink.length > 2048
-    ) {
+    if (values.jobLink.length < 3 || values.jobLink.length > 2048) {
       errors.jobLink = `Job Link can not be less than 3 or greater than 2048 characters: ${values.jobLink.length}`;
     }
     if (values.status.value === "Select An Option") {
@@ -88,13 +85,16 @@ const AddJobPostsComponent = () => {
   };
   // ===================Retrieving Resumes============================
   const [userResumeList, setUserResumeList] = useState([]);
-
   const retrieveData = () => {
     retrieveUserResumes()
       .then((response) => {
-        setUserResumeList(response.data);
+        if (response.status === 201) {
+          setUserResumeList(response.data);
+        }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error.response);
+      });
   };
 
   useEffect(() => {

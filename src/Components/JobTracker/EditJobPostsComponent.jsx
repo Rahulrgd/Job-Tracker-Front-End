@@ -66,7 +66,7 @@ const EditJobPostsComponent = (item) => {
       setTimeout(() => {
         setMessage(false);
         navigate("/user-job-posts");
-      }, 3000);
+      }, 1000);
     } catch (error) {
       console.log(error);
     }

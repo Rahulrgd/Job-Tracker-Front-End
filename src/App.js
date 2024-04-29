@@ -8,7 +8,7 @@ import LogoutComponent from "./Components/Navbar/LogoutComponent";
 import AuthProvider, { useAuth } from "./Components/Security/AuthContext";
 import EditJobPostsComponent from "./Components/JobTracker/EditJobPostsComponent";
 import SignupComponent from "./Components/Navbar/SignupComponent";
-import AllJobPostsComponent from "./Components/JobTracker/AllJobPosts";
+import AllJobPostsComponent from "./Components/JobTracker/AllJobPostsComponent";
 import AddJobPostsComponent from "./Components/JobTracker/AddJobPostsComponent";
 import UserComponent from "./Components/User/UserComponent";
 import UserJobPostsComponent from "./Components/User/UserJobPostsComponents";
@@ -25,7 +25,7 @@ function AuthenticatedRoute({ children }) {
 
 function App() {
   return (
-    <div>
+    <div className="p-3 mb-2 bg-light text-dark">
       <AuthProvider>
         <BrowserRouter>
           <NavbarComponent />
