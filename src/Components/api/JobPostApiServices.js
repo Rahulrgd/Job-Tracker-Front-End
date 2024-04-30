@@ -1,6 +1,6 @@
 import { apiClient } from "./ApiClient";
 
-export const allJobPosts = () => apiClient.get("/v1/all-jobs");
+export const allJobPosts = () => apiClient.get("/v1/dashboard/all-jobs");
 export const addJobsApi = (body) => apiClient.post("/v1/add-job", body);
 export const deleteUserJobPost = (jobPostId) =>
   apiClient.delete("/v1/delete-job-post", {
@@ -23,4 +23,10 @@ export const addJobPostWithId = (jobPostId) => {
 export const updateUserJobPost = (jobPost) =>
   apiClient.put("/v1/update-job-post", jobPost);
 
-export const retrieveUsersPostPerDay = () => apiClient.get("/v1/retrive-users-per-day-jobposts");
+export const retrieveUsersPostPerDay = () =>
+  apiClient.get("/v1/retrive-users-per-day-jobposts");
+
+export const retrieveJobPostsContainingString = (searchString) =>
+  apiClient.get("/v1/dashboard/search-jobposts-containing-strings", {params:{string:searchString}});
+
+

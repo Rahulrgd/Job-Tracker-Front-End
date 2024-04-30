@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import { addJobPostWithId, allJobPosts } from "../api/JobPostApiServices";
-import { Alert, Container, Dropdown, Form, FormGroup } from "react-bootstrap";
+import {
+  addJobPostWithId,
+  allJobPosts,
+  retrieveJobPostsContainingString,
+} from "../api/JobPostApiServices";
+import { Alert, Container, Dropdown, FormGroup } from "react-bootstrap";
 import { useAuth } from "../Security/AuthContext";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./DashBoard.css";
 import { generateRandomColor } from "../JavascriptComponents/RandomColors";
-import { Link } from "react-router-dom";
 import TopThreeCandidatesChart from "../ChartComponents/TopThreeCandidatesChart";
+import { Field, Form, Formik } from "formik";
 
 export default function AllJobPostsComponent() {
   const [allJobList, setAllJobList] = useState([]);
@@ -37,12 +41,35 @@ export default function AllJobPostsComponent() {
       })
       .catch((error) => console.log(error));
   };
+  // ==============================Search Functionality=================================
+  const [string, setString] = useState("");
+
+  const onSubmit = async (string) => {
+    console.log("On Submit is working...");
+    console.log(string)
+    const searchString=string.string;
+    setString(searchString);
+    await retrieveJobPostsContainingString(searchString)
+      .then((response) => {
+        setAllJobList(response.data);
+        console.log(response.data)
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const validate = (string) => {
+    const errors = {};
+    if (string.length < 3) {
+      errors.string =
+        "String length can not have less than 3 characters: " + string.length;
+    }
+  };
 
   // =========================JSX Start================================
   return (
     <div className="p-3">
-          <h3>Dashboard</h3>
-     
+      <h3>Dashboard</h3>
+
       {/* ============================Dashboard======================================= */}
       <br />
       {addMessage && (
@@ -58,10 +85,39 @@ export default function AllJobPostsComponent() {
         <Card>
           <TopThreeCandidatesChart />
         </Card>
+        {/* ============================Search Box=============================== */}
+        <div className="m-3 d-flex justify-content-end">
+          <Formik
+            initialValues={{string:string}}
+            enableReinitialize={true}
+            validate={validate}
+            validateOnBlur={false}
+            validateOnChange={false}
+            onSubmit={onSubmit}
+            className=""
+          >
+            {(props) => (
+              <Form>
+                <Row>
+                  <Col xs="auto">
+                    <Field
+                      type="text"
+                      className=" mr-sm-2 form-control"
+                      name="string"
+                    />
+                  </Col>
+                  <Col xs="auto">
+                    <button className="btn btn-primary" type="submit">Search</button>
+                  </Col>
+                </Row>
+              </Form>
+            )}
+          </Formik>
+        </div>
         {/* ===========================All Job Posts Mapping in Cards============================== */}
         <Row>
           {allJobList.map((item, index) => (
-            <Col>
+            <Col key={index+1}>
               <Card
                 key={item.jobPostId}
                 className="my-3"

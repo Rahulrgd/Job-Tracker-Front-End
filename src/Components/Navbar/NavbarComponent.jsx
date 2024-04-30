@@ -43,25 +43,8 @@ function NavbarComponent() {
               </Nav.Link>
             )}
           </Nav>
-          <Nav>
-            {/* ============================Search Box=============================== */}
-            <Form inline className="">
-              <Row>
-                <Col xs="auto">
-                  <Form.Control
-                    type="text"
-                    placeholder="Not Implemented Yet"
-                    className=" mr-sm-2"
-                  />
-                </Col>
-                <Col xs="auto">
-                  <Button type="submit">Search</Button>
-                </Col>
-              </Row>
-            </Form>
-          </Nav>
-          <Nav>
             {/* ========================Logout Option======================= */}
+          <Nav>
             {isAuthenticated && (
               <Nav.Link as={Link} to="/logout" onClick={handleLogout}>
                 Logout
