@@ -14,10 +14,6 @@ const User30DayPerformanceChart = () => {
   const retrieveData = async () => {
     await retrieveUsersPostPerDay()
       .then((response) => {
-        // const reversedData = response.data.reverse();
-        // setJobPostsDate(reversedData.data.map((item) => item[1]));
-        // setJobPostsPerDay(reversedData.data.map((item) => item[0]));
-        // const reversedData = response.data.reverse();
         setJobPostsDate(response.data.reverse().map((item) => item[1]));
         setJobPostsPerDay(response.data.map((item) => item[0]));
       })
@@ -28,13 +24,13 @@ const User30DayPerformanceChart = () => {
     retrieveData();
   }, []);
   return (
-    <div className="w-100 overflow-x-auto">
+    <div className="w-auto overflow-x-auto" style={{ height: "15rem" }}>
       <Line
         data={{
           labels: jobPostsDate,
           datasets: [
             {
-              label: "Dataset 1",
+              label: "Job Posts",
               data: jobPostsPerDay,
               borderColor: "rgb(255, 99, 132)",
               backgroundColor: "rgba(255, 99, 132, 0.5)",

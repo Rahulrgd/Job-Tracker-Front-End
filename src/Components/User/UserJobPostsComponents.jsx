@@ -44,9 +44,8 @@ const UserJobPostsComponent = () => {
   const handleEditJobPost = (id) => {
     navigate(`/editJobPost/${id}`);
   };
-  // ==========================Random Colors or Cards=========================================
-  
 
+  // ==========================JSX Start=========================================
   return (
     <div className=" m-3">
       <br />
@@ -64,67 +63,65 @@ const UserJobPostsComponent = () => {
           Total Jobs: {userJobList.length}
         </div>
         {/* ============================User Daily Posts Chart=============================== */}
-        <div className="card-container">
-          <Card className="my-3">
-            <Card.Body>
-              <User30DayPerformanceChart />
-            </Card.Body>
-          </Card>
-          {/* ================================Users All Job Posts Mapping=================================== */}
+        <Card>
+          <User30DayPerformanceChart />
+        </Card>
+        {/* ================================Users All Job Posts Mapping=================================== */}
+        <Row>
           {userJobList.map((item, index) => (
-            <Card
-              key={item.jobPostId}
-              className="my-3"
-              style={{
-                width: "18rem",
-                backgroundColor: generateRandomColor(),
-              }}
-            >
-              <Card.Body>
-                <Card.Title className=" text-muted d-flex justify-content-start">
-                  {item.jobTitle}
-                </Card.Title>
-                <Card.Subtitle className=" text-muted d-flex justify-content-start">
-                  {item.companyName}
-                </Card.Subtitle>
-
-                <div className="py-2 d-flex d-flex justify-content-end">
-                  <Card.Subtitle className="text-muted ">
-                    {item.jobDate}
+            <Col>
+              <Card
+                key={item.jobPostId}
+                className="my-3"
+                style={{
+                  width: "18rem",
+                  backgroundColor: generateRandomColor(),
+                }}
+              >
+                <Card.Body>
+                  <Card.Title className=" text-muted d-flex justify-content-start">
+                    {item.jobTitle}
+                  </Card.Title>
+                  <Card.Subtitle className=" text-muted d-flex justify-content-start">
+                    {item.companyName}
                   </Card.Subtitle>
-                </div>
 
-                <Card.Text className="overflow-auto">
-                  {item.jobDescription}
-                </Card.Text>
-              </Card.Body>
-              <Card.Subtitle className="m-3 text-muted d-flex justify-content-end align-items-end">
-                {item.status}
-              </Card.Subtitle>
-              <Card.Subtitle className="m-3 h-auto d-flex justify-content-between align-items-end">
-                <a href={item.jobLink} target="_blank">
-                  Link
-                </a>
-                <Button
-                  className="btn-success"
-                  onClick={() => {
-                    handleEditJobPost(item.id);
-                  }}
-                >
-                  Update
-                </Button>
-                <Button
-                  className="btn-danger"
-                  onClick={() => handleDeleteJobPost(item.id)}
-                >
-                  Delete
-                </Button>
-              </Card.Subtitle>
-            </Card>
-            // </Col>
+                  <div className="py-2 d-flex d-flex justify-content-end">
+                    <Card.Subtitle className="text-muted ">
+                      {item.jobDate}
+                    </Card.Subtitle>
+                  </div>
+
+                  <Card.Text className="overflow-auto">
+                    {item.jobDescription}
+                  </Card.Text>
+                </Card.Body>
+                <Card.Subtitle className="m-3 text-muted d-flex justify-content-end align-items-end">
+                  {item.status}
+                </Card.Subtitle>
+                <Card.Subtitle className="m-3 h-auto d-flex justify-content-between align-items-end">
+                  <a href={item.jobLink} target="_blank">
+                    Link
+                  </a>
+                  <Button
+                    className="btn-success"
+                    onClick={() => {
+                      handleEditJobPost(item.id);
+                    }}
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    className="btn-danger"
+                    onClick={() => handleDeleteJobPost(item.id)}
+                  >
+                    Delete
+                  </Button>
+                </Card.Subtitle>
+              </Card>
+            </Col>
           ))}
-          {/* </Row> */}
-        </div>
+        </Row>
       </Container>
       {/* ================================================================= */}
     </div>

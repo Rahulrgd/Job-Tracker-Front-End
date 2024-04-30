@@ -25,7 +25,7 @@ function AuthenticatedRoute({ children }) {
 
 function App() {
   return (
-    <div className="p-3 mb-2 bg-light text-dark">
+    <div className="mb-2 bg-light text-dark">
       <AuthProvider>
         <BrowserRouter>
           <NavbarComponent />
