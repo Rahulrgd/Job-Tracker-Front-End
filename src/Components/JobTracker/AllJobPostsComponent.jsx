@@ -13,7 +13,7 @@ import Col from "react-bootstrap/Col";
 import "./DashBoard.css";
 import { generateRandomColor } from "../JavascriptComponents/RandomColors";
 import TopThreeCandidatesChart from "../ChartComponents/TopThreeCandidatesChart";
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 
 export default function AllJobPostsComponent() {
   const [allJobList, setAllJobList] = useState([]);
@@ -57,9 +57,9 @@ export default function AllJobPostsComponent() {
       .catch((error) => console.error(error));
   };
 
-  const validate = (string) => {
+  const validate = (values) => {
     const errors = {};
-    if (string.length < 3) {
+    if (values.string.length < 3) {
       errors.string =
         "String length can not have less than 3 characters: " + string.length;
     }
@@ -98,6 +98,11 @@ export default function AllJobPostsComponent() {
           >
             {(props) => (
               <Form>
+                <ErrorMessage
+                name="string"
+                component="div"
+                className="alert alert-danger"
+                />
                 <Row>
                   <Col xs="auto">
                     <Field

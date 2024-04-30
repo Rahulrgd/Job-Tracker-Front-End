@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 
 import Button from "react-bootstrap/Button";
-import { deleteUserJobPost } from "../api/JobPostApiServices";
-import { retrieveUserJobPosts } from "../api/UserServicesApi";
-import { Alert, Container } from "react-bootstrap";
+import {
+  deleteUserJobPost,
+  retrieveJobPostsContainingString,
+} from "../api/JobPostApiServices";
+import {
+  retrieveUserJobPosts,
+  retrieveUserJobPostsContainingString,
+} from "../api/UserServicesApi";
+import { Alert, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
@@ -11,6 +17,7 @@ import Col from "react-bootstrap/Col";
 import User30DayPerformanceChart from "../ChartComponents/User30DayPerformanceChart";
 import "./User.css";
 import { generateRandomColor } from "../JavascriptComponents/RandomColors";
+import { ErrorMessage, Field, Formik } from "formik";
 
 const UserJobPostsComponent = () => {
   const [userJobList, setUserJobList] = useState([]);
@@ -44,6 +51,31 @@ const UserJobPostsComponent = () => {
   const handleEditJobPost = (id) => {
     navigate(`/editJobPost/${id}`);
   };
+  // ==============================Search Functionality=================================
+  const [string, setString] = useState("");
+
+  const onSubmit = async (values, { setSubmitting }) => {
+    console.log("On Submit is working from UserJobPostComponent...");
+    const searchString = values.string;
+    setString(searchString);
+    await retrieveUserJobPostsContainingString(searchString)
+      .then((response) => {
+        setUserJobList(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => console.error(error));
+
+    // Prevent default form submission behavior
+    setSubmitting(false);
+  };
+
+  const validate = (values) => {
+    const errors = {};
+    if (values.string.length < 3) {
+      errors.string =
+        "String length can not have less than 3 characters: " + string.length;
+    }
+  };
 
   // ==========================JSX Start=========================================
   return (
@@ -66,10 +98,46 @@ const UserJobPostsComponent = () => {
         <Card>
           <User30DayPerformanceChart />
         </Card>
+        {/* ============================Search Box=============================== */}
+        <div className="m-3 d-flex justify-content-end">
+          <Formik
+            initialValues={{ string: string }}
+            enableReinitialize={true}
+            validate={validate}
+            validateOnBlur={false}
+            validateOnChange={false}
+            onSubmit={onSubmit}
+            className=""
+          >
+            {(props) => (
+              <Form onSubmit={props.handleSubmit}>
+                <ErrorMessage
+                name="string"
+                component="div"
+                className="alert alert-danger"
+                />
+                <Row>
+                  <Col xs="auto">
+                    <Field
+                      type="text"
+                      className=" mr-sm-2 form-control"
+                      name="string"
+                    />
+                  </Col>
+                  <Col xs="auto">
+                    <button className="btn btn-primary" type="submit">
+                      Search
+                    </button>
+                  </Col>
+                </Row>
+              </Form>
+            )}
+          </Formik>
+        </div>
         {/* ================================Users All Job Posts Mapping=================================== */}
         <Row>
           {userJobList.map((item, index) => (
-            <Col key={index+1}>
+            <Col key={index + 1}>
               <Card
                 key={item.jobPostId}
                 className="my-3"
