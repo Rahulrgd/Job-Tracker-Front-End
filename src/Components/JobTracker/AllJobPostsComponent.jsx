@@ -14,11 +14,18 @@ import "./DashBoard.css";
 import { generateRandomColor } from "../JavascriptComponents/RandomColors";
 import TopThreeCandidatesChart from "../ChartComponents/TopThreeCandidatesChart";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import TotalJobPostsPerDayChart from "../ChartComponents/TotalJobPostsPerDayChart";
+import { countTotalUsers } from "../api/UserServicesApi";
+
+import $ from 'jquery';
 
 export default function AllJobPostsComponent() {
   const [allJobList, setAllJobList] = useState([]);
+  const [totalUsers, setTotalUsers] = useState(0);
 
   useEffect(() => {
+    retrieveTotalUsers();
+
     allJobPosts()
       .then((response) => {
         setAllJobList(response.data);
@@ -26,9 +33,21 @@ export default function AllJobPostsComponent() {
       .catch((error) => console.log(error));
   }, []);
 
+  // ==============================isAuthenticated================================
   const [addMessage, setAddMessage] = useState(false);
 
   const authContext = useAuth();
+  const isAuthenticated = authContext.isAuthenticated;
+
+  // ==========================Retrive Total Users==================================================
+  const retrieveTotalUsers = () => {
+    countTotalUsers()
+      .then((response) => {
+        console.log(response.data);
+        setTotalUsers(response.data);
+      })
+      .catch((error) => console.error(error));
+  };
 
   // ===========================Handle Add Job Posts Method==============================================
   const handleAddJobPost = async (jobPostId) => {
@@ -45,14 +64,11 @@ export default function AllJobPostsComponent() {
   const [string, setString] = useState("");
 
   const onSubmit = async (string) => {
-    console.log("On Submit is working...");
-    console.log(string)
-    const searchString=string.string;
+    const searchString = string.string;
     setString(searchString);
     await retrieveJobPostsContainingString(searchString)
       .then((response) => {
         setAllJobList(response.data);
-        console.log(response.data)
       })
       .catch((error) => console.error(error));
   };
@@ -64,10 +80,46 @@ export default function AllJobPostsComponent() {
         "String length can not have less than 3 characters: " + string.length;
     }
   };
+  // =========================Job Description Expand Feature========================================
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleDescription = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const renderDescription = (item) => {
+    if (isExpanded) {
+      return item.jobDescription;
+    } else {
+      // Limiting the word count
+      const words = item.jobDescription.split(" ");
+      const limitedDescription = words.slice(0, 20).join(" ") + "...";
+      return limitedDescription;
+    }
+  };
+
+  const handleCardClick = (item) => {
+    if (!isExpanded) {
+      toggleDescription();
+      $("#description").addClass("expanded");
+    } else {
+      toggleDescription();
+      $("#description").removeClass("expanded");
+    }
+  };
 
   // =========================JSX Start================================
   return (
     <div className="p-3">
+      {!isAuthenticated && (
+        <Alert
+          className="d-flex justify-content-center"
+          type="danger"
+          variant="danger"
+        >
+          Please log-in to access all the features!
+        </Alert>
+      )}
       <h3>Dashboard</h3>
 
       {/* ============================Dashboard======================================= */}
@@ -78,17 +130,34 @@ export default function AllJobPostsComponent() {
         </Alert>
       )}
       <Container fluid>
-        <div className=" text-muted d-flex justify-content-start">
-          Total Jobs: {allJobList.length}
-        </div>
-        {/* ==========================Top 3 Performer ================================= */}
-        <Card>
-          <TopThreeCandidatesChart />
-        </Card>
+        {/* ==========================Count Jobpost and Total Users==================== */}
+        <Row className=" text-muted">
+          <Col>
+            <p>Total Jobs: {allJobList.length}</p>
+          </Col>
+          <Col>
+            <p>Total Users: {totalUsers}</p>
+          </Col>
+        </Row>
+
+        {/* ==========================Top 3 Performer Chart================================= */}
+        <Row md={2}>
+          <Col className="py-1">
+            <Card>
+              <TopThreeCandidatesChart />
+            </Card>
+          </Col>
+          {/* ==========================Total Job Posts Per Day Chart================================= */}
+          <Col className="py-1">
+            <Card>
+              <TotalJobPostsPerDayChart />
+            </Card>
+          </Col>
+        </Row>
         {/* ============================Search Box=============================== */}
         <div className="m-3 d-flex justify-content-end">
           <Formik
-            initialValues={{string:string}}
+            initialValues={{ string: string }}
             enableReinitialize={true}
             validate={validate}
             validateOnBlur={false}
@@ -98,21 +167,29 @@ export default function AllJobPostsComponent() {
           >
             {(props) => (
               <Form>
-                <ErrorMessage
-                name="string"
-                component="div"
-                className="alert alert-danger"
-                />
-                <Row>
-                  <Col xs="auto">
+                {/* <ErrorMessage
+                  name="string"
+                  component="div"
+                  className="alert alert-danger"
+                /> */}
+                <Row s={2}>
+                  <Col>
                     <Field
                       type="text"
-                      className=" mr-sm-2 form-control"
+                      className="w-100 mr-sm-2 form-control my-2"
                       name="string"
+                      placeholder="Search"
                     />
                   </Col>
-                  <Col xs="auto">
-                    <button className="btn btn-primary" type="submit">Search</button>
+                  <Col>
+                    {/* <div className="d-flex justify-content-center"> */}
+                    <button
+                      className="btn btn-primary my-2 shadow-sm"
+                      type="submit"
+                    >
+                      Search
+                    </button>
+                    {/* </div> */}
                   </Col>
                 </Row>
               </Form>
@@ -122,7 +199,7 @@ export default function AllJobPostsComponent() {
         {/* ===========================All Job Posts Mapping in Cards============================== */}
         <Row>
           {allJobList.map((item, index) => (
-            <Col key={index+1}>
+            <Col key={index + 1}>
               <Card
                 key={item.jobPostId}
                 className="my-3"
@@ -132,7 +209,7 @@ export default function AllJobPostsComponent() {
                   textDecoration: "none",
                 }}
               >
-                <Card.Body>
+                <Card.Body onClick={(item)=>handleCardClick(item)}>
                   <Card.Title className=" text-muted d-flex justify-content-start">
                     {item.jobTitle}
                   </Card.Title>
@@ -149,6 +226,8 @@ export default function AllJobPostsComponent() {
                   <Card.Text className="overflow-auto">
                     {item.jobDescription}
                   </Card.Text>
+                  
+                  {/* ====================================== */}
                 </Card.Body>
                 <Card.Subtitle className="m-3 text-muted d-flex justify-content-end">
                   {item.username}

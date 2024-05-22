@@ -29,30 +29,41 @@ function NavbarComponent() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          {/* ==========================User Option============================== */}
           <Nav className="me-auto">
+            {/* ==========================User Option============================== */}
             {isAuthenticated && (
               <Nav.Link as={Link} to="/user-profile">
                 User
               </Nav.Link>
             )}
+
             {/* =========================Add Post Option========================= */}
             {isAuthenticated && (
               <Nav.Link as={Link} to="/add-job-posts">
-                Add Post
+                + Post
               </Nav.Link>
             )}
+            {/* ==========================About============================== */}
+            <Nav.Link as={Link} to="/about">
+              About
+            </Nav.Link>
           </Nav>
-            {/* ========================Logout Option======================= */}
+
+          {/* ========================Logout Option======================= */}
           <Nav>
             {isAuthenticated && (
-              <Nav.Link as={Link} to="/logout" onClick={handleLogout}>
+              <Nav.Link as={Link} to="/" onClick={handleLogout}>
                 Logout
               </Nav.Link>
             )}
             {/* ==========================Login Option========================= */}
             {!isAuthenticated && (
-              <Nav.Link eventKey={2} as={Link} to="/login" className="justify-content-end">
+              <Nav.Link
+                eventKey={2}
+                as={Link}
+                to="/login"
+                className="justify-content-end"
+              >
                 Login
               </Nav.Link>
             )}

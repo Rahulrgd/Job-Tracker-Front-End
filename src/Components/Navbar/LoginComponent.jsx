@@ -26,7 +26,7 @@ function LoginComponent() {
 
   const onSubmit = async (values) => {
     const body = {
-      username: values.email,
+      email: values.email,
       password: values.password,
     };
     setFormValues(values);
@@ -41,7 +41,7 @@ function LoginComponent() {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container pt-5">
       <Formik
         initialValues={formValues}
         enableReinitialize-={true}
@@ -77,7 +77,7 @@ function LoginComponent() {
         )}
       </Formik>
       <div className="d-flex justify-content-center m-5 text-secondary">
-        Signup
+        To create account - 
         <Link className="mx-2" to="/signup">
           click here.
         </Link>

@@ -24,8 +24,11 @@ const UserJobPostsComponent = () => {
 
   const retrieveData = () => {
     retrieveUserJobPosts()
-      .then((response) => setUserJobList(response.data))
+      .then((response) => {
+        setUserJobList(response.data);
+      })
       .catch((error) => console.log(error));
+
   };
 
   useEffect(() => {
@@ -35,6 +38,7 @@ const UserJobPostsComponent = () => {
   const [deleteMessage, setDeleteMessage] = useState(false);
 
   const handleDeleteJobPost = (id) => {
+    console.log(id);
     deleteUserJobPost(id)
       .then((response) => {
         setDeleteMessage(true);
@@ -55,13 +59,11 @@ const UserJobPostsComponent = () => {
   const [string, setString] = useState("");
 
   const onSubmit = async (values, { setSubmitting }) => {
-    console.log("On Submit is working from UserJobPostComponent...");
     const searchString = values.string;
     setString(searchString);
     await retrieveUserJobPostsContainingString(searchString)
       .then((response) => {
         setUserJobList(response.data);
-        console.log(response.data);
       })
       .catch((error) => console.error(error));
 
@@ -114,17 +116,17 @@ const UserJobPostsComponent = () => {
                 <ErrorMessage
                 name="string"
                 component="div"
-                className="alert alert-danger"
+                className="alert alert-danger "
                 />
                 <Row>
                   <Col xs="auto">
                     <Field
                       type="text"
-                      className=" mr-sm-2 form-control"
+                      className=" mr-sm-2 form-control my-2"
                       name="string"
                     />
                   </Col>
-                  <Col xs="auto">
+                  <Col xs="auto" className="my-2">
                     <button className="btn btn-primary" type="submit">
                       Search
                     </button>
@@ -165,7 +167,7 @@ const UserJobPostsComponent = () => {
                   </Card.Text>
                 </Card.Body>
                 <Card.Subtitle className="m-3 text-muted d-flex justify-content-end align-items-end">
-                  {item.status}
+                  {item.jobStatus}
                 </Card.Subtitle>
                 <Card.Subtitle className="m-3 h-auto d-flex justify-content-between align-items-end">
                   <a href={item.jobLink} target="_blank">
@@ -174,14 +176,14 @@ const UserJobPostsComponent = () => {
                   <Button
                     className="btn-success"
                     onClick={() => {
-                      handleEditJobPost(item.id);
+                      handleEditJobPost(item.jobPostId);
                     }}
                   >
                     Update
                   </Button>
                   <Button
                     className="btn-danger"
-                    onClick={() => handleDeleteJobPost(item.id)}
+                    onClick={() => handleDeleteJobPost(item.jobPostId)}
                   >
                     Delete
                   </Button>

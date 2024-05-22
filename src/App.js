@@ -1,6 +1,5 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import WelcomeComponenet from "./Components/Home/WelcomeComponent";
 import NavbarComponent from "./Components/Navbar/NavbarComponent";
 import NoPage from "./Components/Extra/NoPageComponent";
 import LoginComponent from "./Components/Navbar/LoginComponent";
@@ -14,6 +13,8 @@ import UserComponent from "./Components/User/UserComponent";
 import UserJobPostsComponent from "./Components/User/UserJobPostsComponents";
 import UsersResumeComponent from "./Components/User/UsersResumesComponent";
 import UploadResumeComponent from "./Components/ResumeComponents/UploadResumeComponent";
+import AboutComponenet from "./Components/Home/AboutComponent";
+import FooterComponent from "./Components/Home/FooterComponent";
 
 function AuthenticatedRoute({ children }) {
   const authContext = useAuth();
@@ -40,6 +41,7 @@ function App() {
                 </AuthenticatedRoute>
               }
             />
+            <Route path="/about" element={<AboutComponenet />} />
             <Route
               path="/user-profile"
               element={
@@ -92,6 +94,7 @@ function App() {
             <Route path="/all-job-posts" element={<AllJobPostsComponent />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
+          <FooterComponent />
         </BrowserRouter>
       </AuthProvider>
     </div>
