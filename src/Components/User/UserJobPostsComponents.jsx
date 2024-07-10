@@ -137,14 +137,13 @@ const UserJobPostsComponent = () => {
           </Formik>
         </div>
         {/* ================================Users All Job Posts Mapping=================================== */}
-        <Row>
           {userJobList.map((item, index) => (
             <Col key={index + 1}>
               <Card
                 key={item.jobPostId}
                 className="my-3"
                 style={{
-                  width: "18rem",
+                  width: "auto",
                   backgroundColor: generateRandomColor(),
                 }}
               >
@@ -191,7 +190,7 @@ const UserJobPostsComponent = () => {
               </Card>
             </Col>
           ))}
-        </Row>
+
       </Container>
       {/* ================================================================= */}
     </div>
