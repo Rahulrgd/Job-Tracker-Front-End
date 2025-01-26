@@ -116,9 +116,9 @@ const AddJobPostsComponent = () => {
           <Form>
             <h1>Add Job Posts</h1>
             <br />
-            <div className="d-flex justify-content-end m-3">
+            {/* <div className="d-flex justify-content-end m-3">
               <button className="btn btn-secondary">Auto Fill - not working now!</button>
-            </div>
+            </div> */}
             {/* ====================Alert Message======================== */}
             {message && (
               <Alert key="success" variant="success">
