@@ -16,7 +16,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import User30DayPerformanceChart from "../ChartComponents/User30DayPerformanceChart";
 import "./User.css";
-import { generateRandomColor } from "../JavascriptComponents/RandomColors";
 import { ErrorMessage, Field, Formik } from "formik";
 
 const UserJobPostsComponent = () => {
@@ -26,6 +25,7 @@ const UserJobPostsComponent = () => {
     retrieveUserJobPosts()
       .then((response) => {
         setUserJobList(response.data);
+        console.log(userJobList);
       })
       .catch((error) => console.log(error));
 
@@ -55,6 +55,7 @@ const UserJobPostsComponent = () => {
   const handleEditJobPost = (id) => {
     navigate(`/editJobPost/${id}`);
   };
+  
   // ==============================Search Functionality=================================
   const [string, setString] = useState("");
 
@@ -144,7 +145,7 @@ const UserJobPostsComponent = () => {
                 className="my-3"
                 style={{
                   width: "auto",
-                  backgroundColor: generateRandomColor(),
+                  // backgroundColor: generateRandomColor(),
                 }}
               >
                 <Card.Body>

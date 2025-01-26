@@ -17,7 +17,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import TotalJobPostsPerDayChart from "../ChartComponents/TotalJobPostsPerDayChart";
 import { countTotalUsers } from "../api/UserServicesApi";
 
-import $ from 'jquery';
+import $ from "jquery";
+import { useNavigate } from "react-router-dom";
 
 export default function AllJobPostsComponent() {
   const [allJobList, setAllJobList] = useState([]);
@@ -49,17 +50,12 @@ export default function AllJobPostsComponent() {
       .catch((error) => console.error(error));
   };
 
-  // ===========================Handle Add Job Posts Method==============================================
-  const handleAddJobPost = async (jobPostId) => {
-    await addJobPostWithId(jobPostId)
-      .then((response) => {
-        setAddMessage(true);
-        setTimeout(() => {
-          setAddMessage(false);
-        }, 1000);
-      })
-      .catch((error) => console.log(error));
+  // ===========================Handle Job Details Method With ID==============================================
+  const navigate = useNavigate();
+  const handleJobPostWithId = (id) => {
+    navigate(`/job-details/${id}`);
   };
+
   // ==============================Search Functionality=================================
   const [string, setString] = useState("");
 
@@ -197,60 +193,50 @@ export default function AllJobPostsComponent() {
           </Formik>
         </div>
         {/* ===========================All Job Posts Mapping in Cards============================== */}
-        
-          {allJobList.map((item, index) => (
-            <Col key={index + 1}>
-              <Card
-                key={item.jobPostId}
-                className="my-3"
-                style={{
-                  width: "auto",
-                  backgroundColor: generateRandomColor(),
-                  textDecoration: "none",
-                }}
-              >
-                <Card.Body onClick={(item)=>handleCardClick(item)}>
-                  <Card.Title className=" text-muted d-flex justify-content-start">
-                    {item.jobTitle}
-                  </Card.Title>
-                  <Card.Subtitle className=" text-muted d-flex justify-content-start">
-                    {item.companyName}
+
+        {allJobList.map((item, index) => (
+          <Col
+            key={index + 1}
+            onClick={() => {
+              handleJobPostWithId(item.jobPostId);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <Card
+              key={item.jobPostId}
+              className="my-3"
+              style={{
+                width: "auto",
+                textDecoration: "none",
+              }}
+            >
+              <Card.Body onClick={(item) => handleCardClick(item)}>
+                <Card.Title className=" text-muted d-flex justify-content-start">
+                  {item.jobTitle}
+                </Card.Title>
+                <Card.Subtitle className=" text-muted d-flex justify-content-start">
+                  {item.companyName}
+                </Card.Subtitle>
+
+                <div className="py-2 d-flex d-flex justify-content-end">
+                  <Card.Subtitle className="text-muted ">
+                    {item.jobDate}
                   </Card.Subtitle>
-
-                  <div className="py-2 d-flex d-flex justify-content-end">
-                    <Card.Subtitle className="text-muted ">
-                      {item.jobDate}
-                    </Card.Subtitle>
-                  </div>
-
-                  <Card.Text className="overflow-auto">
-                    {item.jobDescription}
-                  </Card.Text>
-                  
-                  {/* ====================================== */}
-                </Card.Body>
-                <Card.Subtitle className="m-3 text-muted d-flex justify-content-end">
-                  {item.username}
-                </Card.Subtitle>
-                <Card.Subtitle className="mx-3 text-muted d-flex justify-content-end">
-                  {item.jobStatus}
-                </Card.Subtitle>
-                <div className="m-3 d-flex justify-content-between">
-                  <a href={item.jobLink} target="_blank">
-                    Link
-                  </a>
-                  {authContext.isAuthenticated && (
-                    <Button
-                      onClick={() => handleAddJobPost(item.jobPostId)}
-                      variant="primary"
-                    >
-                      Add
-                    </Button>
-                  )}
                 </div>
-              </Card>
-            </Col>
-          ))}
+
+                <Card.Text className="overflow-auto">
+                  {item.jobDescription}
+                </Card.Text>
+
+              </Card.Body>
+              <div className="m-3 d-flex justify-content-between">
+                <a href={item.jobLink} target="_blank">
+                  Link
+                </a>
+              </div>
+            </Card>
+          </Col>
+        ))}
       </Container>
     </div>
   );

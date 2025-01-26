@@ -16,6 +16,13 @@ export const retrieveJobPostWithId = (jobPostId) =>
     },
   });
 
+export const retrieveJobPostDetailsWithId = (jobPostId) =>
+  apiClient.get("/v1/dashboard/job-post-with-id", {
+    params: {
+      jobPostId: jobPostId,
+    },
+  });
+
 export const addJobPostWithId = (jobPostId) => {
   return apiClient.post(`/v1/add-job-with-job-id?jobPostId=${jobPostId}`);
 };

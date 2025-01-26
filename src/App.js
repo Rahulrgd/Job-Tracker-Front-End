@@ -15,6 +15,7 @@ import UsersResumeComponent from "./Components/User/UsersResumesComponent";
 import UploadResumeComponent from "./Components/ResumeComponents/UploadResumeComponent";
 import AboutComponenet from "./Components/Home/AboutComponent";
 import FooterComponent from "./Components/Home/FooterComponent";
+import JobDetailsComponent from "./Components/JobTracker/JobDetailsComponent";
 
 function AuthenticatedRoute({ children }) {
   const authContext = useAuth();
@@ -92,6 +93,7 @@ function App() {
             />
             <Route path="/" element={<AllJobPostsComponent />} />
             <Route path="/all-job-posts" element={<AllJobPostsComponent />} />
+            <Route path="/job-details/:id" element={<JobDetailsComponent />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <FooterComponent />
